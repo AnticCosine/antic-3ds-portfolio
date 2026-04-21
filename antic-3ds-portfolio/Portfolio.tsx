@@ -54,6 +54,7 @@ type GLTFResult = GLTF & {
     te_2: THREE.Mesh
     Headphone_Port: THREE.Mesh
     Home_Button: THREE.Mesh
+    Home_Button_Casing: THREE.Mesh
     Home_Button_Casing001: THREE.Mesh
     Joystick: THREE.Mesh
     Joystick_C: THREE.Mesh
@@ -114,14 +115,13 @@ export function Model(props: JSX.IntrinsicElements['group']) {
           </mesh>
         </group>
         <mesh name="Control_Casing" geometry={nodes.Control_Casing.geometry} material={materials['Inside casing']} position={[0, 0.686, 0]} scale={1.101}>
-          <group name="Home_Button_Casing" />
           <group name="ABXY_Buttons" position={[0.729, 0.01, -0.125]} scale={0.841}>
             <mesh name="Circle005" geometry={nodes.Circle005.geometry} material={materials['B Button']} />
             <mesh name="Circle005_1" geometry={nodes.Circle005_1.geometry} material={materials['A Button']} />
             <mesh name="Circle005_2" geometry={nodes.Circle005_2.geometry} material={materials['Y Button']} />
             <mesh name="Circle005_3" geometry={nodes.Circle005_3.geometry} material={materials['X Button']} />
           </group>
-          <group name="About_Icon" position={[-0.322, 0.017, 0.203]} scale={0.891}>
+          <group name="About_Icon" position={[-0.221, 0.021, 0.339]} scale={0.891}>
             <mesh name="Curve006" geometry={nodes.Curve006.geometry} material={materials['About Icon']} />
             <mesh name="Curve006_1" geometry={nodes.Curve006_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Curve006_2" geometry={nodes.Curve006_2.geometry} material={materials['UI Text Colour']} />
@@ -137,24 +137,25 @@ export function Model(props: JSX.IntrinsicElements['group']) {
           <mesh name="Bottom_Screen_Casing" geometry={nodes.Bottom_Screen_Casing.geometry} material={materials['Inside casing']} />
           <mesh name="Bottom_Screws_" geometry={nodes.Bottom_Screws_.geometry} material={materials['Speaker Colour']} position={[0, -0.143, -0.365]} scale={0.023} />
           <mesh name="Charging_port" geometry={nodes.Charging_port.geometry} material={materials['Speaker Colour']} position={[0, -0.083, -0.51]} />
-          <group name="Contacts_Icon" position={[0.227, 0.072, 0.242]} scale={0.15}>
+          <group name="Contacts_Icon" position={[0.226, 0.021, 0.339]} scale={0.15}>
             <mesh name="Text004" geometry={nodes.Text004.geometry} material={materials['UI Text Colour']} />
             <mesh name="Text004_1" geometry={nodes.Text004_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Text004_2" geometry={nodes.Text004_2.geometry} material={materials['Mail Icon']} />
           </group>
           <mesh name="Control_Pad" geometry={nodes.Control_Pad.geometry} material={materials.Material} position={[-0.729, 0.021, 0.073]} scale={[3.736, 1.881, 3.736]} />
-          <group name="Github_Icon" position={[-0.316, 0.019, 0.095]} scale={0.195}>
+          <group name="Github_Icon" position={[-0.221, 0.021, 0.008]} scale={0.195}>
             <mesh name="te" geometry={nodes.te.geometry} material={materials['UI Text Colour']} />
             <mesh name="te_1" geometry={nodes.te_1.geometry} material={materials['Discord Colour']} />
             <mesh name="te_2" geometry={nodes.te_2.geometry} material={materials['UI Button Colour']} />
           </group>
           <mesh name="Headphone_Port" geometry={nodes.Headphone_Port.geometry} material={materials['Speaker Colour']} position={[0, -0.091, 0.512]} scale={0.032} />
           <mesh name="Home_Button" geometry={nodes.Home_Button.geometry} material={materials.Material} position={[0, 0.021, 0.469]} />
+          <mesh name="Home_Button_Casing" geometry={nodes.Home_Button_Casing.geometry} material={materials.Material} />
           <mesh name="Home_Button_Casing001" geometry={nodes.Home_Button_Casing001.geometry} material={materials['Material.001']} rotation={[Math.PI, 0, Math.PI]} />
           <mesh name="Joystick" geometry={nodes.Joystick.geometry} material={materials.Background} position={[-0.729, 0.021, -0.208]} />
           <mesh name="Joystick_C" geometry={nodes.Joystick_C.geometry} material={materials.Background} position={[0.635, 0, -0.323]} scale={0.815} />
           <mesh name="Power_Button" geometry={nodes.Power_Button.geometry} material={materials['Speaker Colour']} position={[0, 0, 0.005]} />
-          <group name="Projects_Icon" position={[0.229, 0.214, -0.088]} scale={0.168}>
+          <group name="Projects_Icon" position={[0.226, 0.021, 0.008]} scale={0.168}>
             <mesh name="Text" geometry={nodes.Text.geometry} material={materials['UI Text Colour']} />
             <mesh name="Text_1" geometry={nodes.Text_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Text_2" geometry={nodes.Text_2.geometry} material={materials['Projects Icon']} />

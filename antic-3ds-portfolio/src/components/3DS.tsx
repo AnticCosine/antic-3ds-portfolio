@@ -4,9 +4,10 @@ Command: npx gltfjsx@6.5.3 public/models/portfolio.glb -t
 */
 
 import * as THREE from 'three'
-import React, { type JSX } from 'react'
+import React, { useState, type JSX } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
+import { useSpring, animated } from '@react-spring/three'
 
 type ActionName = '3DSSpin' | '3DSUpperSpin' | '3DSRotate'
 
@@ -54,6 +55,7 @@ type GLTFResult = GLTF & {
     te_2: THREE.Mesh
     Headphone_Port: THREE.Mesh
     Home_Button: THREE.Mesh
+    Home_Button_Casing: THREE.Mesh
     Home_Button_Casing001: THREE.Mesh
     Joystick: THREE.Mesh
     Joystick_C: THREE.Mesh
@@ -95,7 +97,31 @@ export function DS(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials, animations } = useGLTF('./models/portfolio.glb') as unknown as GLTFResult
   const { actions } = useAnimations(animations, group)
 
-  const [hovered, setHovered] = React.useState<boolean>(false);
+  const baseY = 0.021
+
+  const [hovered, setHovered] = useState<string | null>(null);
+
+  const { contactRotation, contactTransform } = useSpring({
+    contactRotation: hovered == 'contacts' ? Math.PI / 4 : 0,
+    contactTransform: hovered == 'contacts' ? baseY + 0.1 : baseY
+  })
+
+  const { githubRotation, githubTransform } = useSpring({
+    githubRotation: hovered == 'github' ? Math.PI / 4 : 0,
+    githubTransform: hovered == 'github' ? baseY + 0.1 : baseY
+  })
+
+  const { projectsRotation, projectsTransform } = useSpring({
+    projectsRotation: hovered == 'projects' ? Math.PI / 4 : 0,
+    projectsTransform: hovered == 'projects' ? baseY + 0.1 : baseY
+  })
+
+  const { aboutRotation, aboutTransform } = useSpring({
+    aboutRotation: hovered == 'about' ? Math.PI / 4 : 0,
+    aboutTransform: hovered == 'about' ? baseY + 0.1 : baseY
+  })
+
+
 
   console.log(actions)
 
@@ -116,8 +142,8 @@ export function DS(props: JSX.IntrinsicElements['group']) {
     actions['3DSUpperSpin']!.clampWhenFinished = true;
     actions['3DSRotate']!.clampWhenFinished = true;
 
-  }, [actions])
-
+  }, [actions])// rotation={[hovered ? Math.PI / 4 : 0, 0, 0]} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}
+  // 0.01
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -138,18 +164,20 @@ export function DS(props: JSX.IntrinsicElements['group']) {
           </mesh>
         </group>
         <mesh name="Control_Casing" geometry={nodes.Control_Casing.geometry} material={materials['Inside casing']} position={[0, 0.686, 0]} scale={1.101}>
-          <group name="Home_Button_Casing" />
           <group name="ABXY_Buttons" position={[0.729, 0.01, -0.125]} scale={0.841}>
             <mesh name="Circle005" geometry={nodes.Circle005.geometry} material={materials['B Button']} />
             <mesh name="Circle005_1" geometry={nodes.Circle005_1.geometry} material={materials['A Button']} />
             <mesh name="Circle005_2" geometry={nodes.Circle005_2.geometry} material={materials['Y Button']} />
             <mesh name="Circle005_3" geometry={nodes.Circle005_3.geometry} material={materials['X Button']} />
           </group>
-          <group name="About_Icon" position={[-0.322, 0.017, 0.203]} scale={0.891}>
+          <animated.group name="About_Icon" position={[-0.221, 0.021, 0.339]} scale={0.891}
+            position-y={ aboutTransform }  rotation-x={ aboutRotation }
+            onPointerOver={() => { setHovered('about'), document.body.style.cursor = 'pointer' }}
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}>
             <mesh name="Curve006" geometry={nodes.Curve006.geometry} material={materials['About Icon']} />
             <mesh name="Curve006_1" geometry={nodes.Curve006_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Curve006_2" geometry={nodes.Curve006_2.geometry} material={materials['UI Text Colour']} />
-          </group>
+          </animated.group>
           <mesh name="Back_Buttons_" geometry={nodes.Back_Buttons_.geometry} material={materials['Inside casing']} position={[0, -0.121, -0.521]} />
           <mesh name="Back_Casing" geometry={nodes.Back_Casing.geometry} material={materials['Inside casing']} />
           <mesh name="Battery_Indicator" geometry={nodes.Battery_Indicator.geometry} material={materials['Battery Indicator']} position={[0.833, 0.104, -0.469]} scale={0.012} />
@@ -162,29 +190,41 @@ export function DS(props: JSX.IntrinsicElements['group']) {
           <mesh name="Bottom_Screws_" geometry={nodes.Bottom_Screws_.geometry} material={materials['Speaker Colour']} position={[0, -0.143, -0.365]} scale={0.023} />
           <mesh name="Charging_port" geometry={nodes.Charging_port.geometry} material={materials['Speaker Colour']} position={[0, -0.083, -0.51]} />
 
-          <group name="Contacts_Icon" position={[0.227, 0.072, 0.242]} scale={0.15} >
+          <animated.group name="Contacts_Icon" position={[0.226, 0.021, 0.339]} scale={0.15}
+            position-y={ contactTransform }  rotation-x={ contactRotation }
+            onPointerOver={() => { setHovered('contacts'), document.body.style.cursor = 'pointer' }}
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}>
             <mesh name="Text004" geometry={nodes.Text004.geometry} material={materials['UI Text Colour']} />
             <mesh name="Text004_1" geometry={nodes.Text004_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Text004_2" geometry={nodes.Text004_2.geometry} material={materials['Mail Icon']} />
-          </group>
+          </animated.group>
 
           <mesh name="Control_Pad" geometry={nodes.Control_Pad.geometry} material={materials.Material} position={[-0.729, 0.021, 0.073]} scale={[3.736, 1.881, 3.736]} />
-          <group name="Github_Icon" position={[-0.316, 0.019, 0.095]} scale={0.195} onPointerOver={(e) => {document.body.style.cursor = 'pointer'}} >
+          <animated.group name="Github_Icon" position={[-0.221, 0.021, 0.008]} scale={0.195}
+            position-y={ githubTransform }  rotation-x={ githubRotation }
+            onPointerOver={() => { setHovered('github'), document.body.style.cursor = 'pointer' }}
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}>
             <mesh name="te" geometry={nodes.te.geometry} material={materials['UI Text Colour']} />
             <mesh name="te_1" geometry={nodes.te_1.geometry} material={materials['Discord Colour']} />
             <mesh name="te_2" geometry={nodes.te_2.geometry} material={materials['UI Button Colour']} />
-          </group>
+          </animated.group>
           <mesh name="Headphone_Port" geometry={nodes.Headphone_Port.geometry} material={materials['Speaker Colour']} position={[0, -0.091, 0.512]} scale={0.032} />
           <mesh name="Home_Button" geometry={nodes.Home_Button.geometry} material={materials.Material} position={[0, 0.021, 0.469]} />
+          <mesh name="Home_Button_Casing" geometry={nodes.Home_Button_Casing.geometry} material={materials.Material} />
           <mesh name="Home_Button_Casing001" geometry={nodes.Home_Button_Casing001.geometry} material={materials['Material.001']} rotation={[Math.PI, 0, Math.PI]} />
           <mesh name="Joystick" geometry={nodes.Joystick.geometry} material={materials.Background} position={[-0.729, 0.021, -0.208]} />
           <mesh name="Joystick_C" geometry={nodes.Joystick_C.geometry} material={materials.Background} position={[0.635, 0, -0.323]} scale={0.815} />
           <mesh name="Power_Button" geometry={nodes.Power_Button.geometry} material={materials['Speaker Colour']} position={[0, 0, 0.005]} />
-          <group name="Projects_Icon" position={[0.229, 0.214, -0.088]} scale={0.168}>
+
+          <animated.group name="Projects_Icon" position={[0.226, 0.021, 0.008]} scale={0.168}
+            position-y={ projectsTransform }  rotation-x={ projectsRotation }
+            onPointerOver={() => { setHovered('projects'), document.body.style.cursor = 'pointer' }}
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}>
             <mesh name="Text" geometry={nodes.Text.geometry} material={materials['UI Text Colour']} />
             <mesh name="Text_1" geometry={nodes.Text_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Text_2" geometry={nodes.Text_2.geometry} material={materials['Projects Icon']} />
-          </group>
+          </animated.group>
+
           <mesh name="Start_Button" geometry={nodes.Start_Button.geometry} material={materials.Material} position={[0.635, 0.007, 0.245]} scale={0.582} />
           <mesh name="Stylus" geometry={nodes.Stylus.geometry} material={materials['Speaker Colour']} position={[0.344, -0.084, 0.622]} scale={0.044} />
         </mesh>
