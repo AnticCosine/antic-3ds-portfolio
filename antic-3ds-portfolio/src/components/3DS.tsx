@@ -5,36 +5,17 @@ Command: npx gltfjsx@6.5.3 public/models/portfolio.glb -t
 
 import * as THREE from 'three'
 import React, { type JSX } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, useAnimations } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
+
+type ActionName = '3DSSpin' | '3DSUpperSpin' | '3DSRotate'
+
+interface GLTFAction extends THREE.AnimationClip {
+  name: ActionName
+}
 
 type GLTFResult = GLTF & {
   nodes: {
-    Background: THREE.Mesh
-    Circle005: THREE.Mesh
-    Circle005_1: THREE.Mesh
-    Circle005_2: THREE.Mesh
-    Circle005_3: THREE.Mesh
-    Back_Buttons_: THREE.Mesh
-    Back_Casing: THREE.Mesh
-    Battery_Indicator: THREE.Mesh
-    Bottom_Casing: THREE.Mesh
-    Esfera004: THREE.Mesh
-    Bottom_Grip: THREE.Mesh
-    Bottom_Screen: THREE.Mesh
-    Bottom_Screen_Casing: THREE.Mesh
-    Bottom_Screws_: THREE.Mesh
-    Charging_port: THREE.Mesh
-    Control_Casing: THREE.Mesh
-    Control_Pad: THREE.Mesh
-    Headphone_Port: THREE.Mesh
-    Home_Button: THREE.Mesh
-    Home_Button_Casing: THREE.Mesh
-    Joystick: THREE.Mesh
-    Joystick_C: THREE.Mesh
-    Power_Button: THREE.Mesh
-    Start_Button: THREE.Mesh
-    Stylus: THREE.Mesh
     Upper_Casing: THREE.Mesh
     Carcasa_de_pantalla002: THREE.Mesh
     Carcasa_de_pantalla003: THREE.Mesh
@@ -46,103 +27,171 @@ type GLTFResult = GLTF & {
     Esfera005: THREE.Mesh
     Pantalla: THREE.Mesh
     Carcasa_de_pantalla001: THREE.Mesh
-    Plane001: THREE.Mesh
-    Curve002: THREE.Mesh
-    Text002: THREE.Mesh
-    Plane002: THREE.Mesh
-    Curve003: THREE.Mesh
-    Text005: THREE.Mesh
-    Curve: THREE.Mesh
-    Plane: THREE.Mesh
-    Text: THREE.Mesh
-    Plane003: THREE.Mesh
-    Curve004: THREE.Mesh
+    Control_Casing: THREE.Mesh
+    Circle005: THREE.Mesh
+    Circle005_1: THREE.Mesh
+    Circle005_2: THREE.Mesh
+    Circle005_3: THREE.Mesh
+    Curve006: THREE.Mesh
+    Curve006_1: THREE.Mesh
+    Curve006_2: THREE.Mesh
+    Back_Buttons_: THREE.Mesh
+    Back_Casing: THREE.Mesh
+    Battery_Indicator: THREE.Mesh
+    Bottom_Casing: THREE.Mesh
+    Esfera004: THREE.Mesh
+    Bottom_Grip: THREE.Mesh
+    Bottom_Screen: THREE.Mesh
+    Bottom_Screen_Casing: THREE.Mesh
+    Bottom_Screws_: THREE.Mesh
+    Charging_port: THREE.Mesh
     Text004: THREE.Mesh
+    Text004_1: THREE.Mesh
+    Text004_2: THREE.Mesh
+    Control_Pad: THREE.Mesh
+    te: THREE.Mesh
+    te_1: THREE.Mesh
+    te_2: THREE.Mesh
+    Headphone_Port: THREE.Mesh
+    Home_Button: THREE.Mesh
+    Home_Button_Casing001: THREE.Mesh
+    Joystick: THREE.Mesh
+    Joystick_C: THREE.Mesh
+    Power_Button: THREE.Mesh
+    Text: THREE.Mesh
+    Text_1: THREE.Mesh
+    Text_2: THREE.Mesh
+    Start_Button: THREE.Mesh
+    Stylus: THREE.Mesh
   }
   materials: {
-    Background: THREE.MeshStandardMaterial
+    ['Inside casing']: THREE.MeshStandardMaterial
+    ['Speaker Colour']: THREE.MeshStandardMaterial
+    ['Plate Colour']: THREE.MeshStandardMaterial
+    ['Volume slider']: THREE.MeshStandardMaterial
+    ['Top screen grip']: THREE.MeshStandardMaterial
+    Screen: THREE.MeshStandardMaterial
+    InnerScreenMaterial: THREE.MeshStandardMaterial
     ['B Button']: THREE.MeshStandardMaterial
     ['A Button']: THREE.MeshStandardMaterial
     ['Y Button']: THREE.MeshStandardMaterial
     ['X Button']: THREE.MeshStandardMaterial
-    ['Inside casing']: THREE.MeshStandardMaterial
-    ['Battery Indicator']: THREE.MeshStandardMaterial
-    ['Plate Colour']: THREE.MeshStandardMaterial
-    ['Speaker Colour']: THREE.MeshStandardMaterial
-    Screen: THREE.MeshStandardMaterial
-    Material: THREE.MeshStandardMaterial
-    ['Volume slider']: THREE.MeshStandardMaterial
-    ['Top screen grip']: THREE.MeshStandardMaterial
-    InnerScreenMaterial: THREE.MeshStandardMaterial
-    ['UI Button Colour']: THREE.MeshStandardMaterial
-    ['Projects Icon']: THREE.MeshStandardMaterial
-    ['UI Text Colour']: THREE.MeshStandardMaterial
-    ['Mail Icon']: THREE.MeshStandardMaterial
-    ['Discord Colour']: THREE.MeshStandardMaterial
     ['About Icon']: THREE.MeshStandardMaterial
+    ['UI Button Colour']: THREE.MeshStandardMaterial
+    ['UI Text Colour']: THREE.MeshStandardMaterial
+    ['Battery Indicator']: THREE.MeshStandardMaterial
+    ['Mail Icon']: THREE.MeshStandardMaterial
+    Material: THREE.MeshStandardMaterial
+    ['Discord Colour']: THREE.MeshStandardMaterial
+    ['Material.001']: THREE.MeshStandardMaterial
+    Background: THREE.MeshStandardMaterial
+    ['Projects Icon']: THREE.MeshStandardMaterial
   }
-  //animations: GLTFAction[]
+  animations: GLTFAction[]
 }
 
 export function DS(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('./models/portfolio.glb') as unknown as GLTFResult;
+  const group = React.useRef<THREE.Group>(null!)
+  const { nodes, materials, animations } = useGLTF('./models/portfolio.glb') as unknown as GLTFResult
+  const { actions } = useAnimations(animations, group)
+
+  const [hovered, setHovered] = React.useState<boolean>(false);
+
+  console.log(actions)
+
+  React.useEffect(() => {
+
+
+    if (!actions) return
+
+    actions['3DSSpin']?.play()
+    actions['3DSUpperSpin']?.play()
+    actions['3DSRotate']?.play()
+
+    actions['3DSSpin']?.setLoop(THREE.LoopOnce, 1)
+    actions['3DSUpperSpin']?.setLoop(THREE.LoopOnce, 1)
+    actions['3DSRotate']?.setLoop(THREE.LoopOnce, 1)
+
+    actions['3DSSpin']!.clampWhenFinished = true;
+    actions['3DSUpperSpin']!.clampWhenFinished = true;
+    actions['3DSRotate']!.clampWhenFinished = true;
+
+  }, [actions])
+
+
   return (
-    <group {...props} dispose={null}>
-      <mesh geometry={nodes.Background.geometry} material={materials.Background} position={[0, 27.674, 0]} />
-      <group position={[0.803, 22.445, -0.138]} rotation={[Math.PI, 0, Math.PI]} scale={0.925}>
-        <mesh geometry={nodes.Circle005.geometry} material={materials['B Button']} />
-        <mesh geometry={nodes.Circle005_1.geometry} material={materials['A Button']} />
-        <mesh geometry={nodes.Circle005_2.geometry} material={materials['Y Button']} />
-        <mesh geometry={nodes.Circle005_3.geometry} material={materials['X Button']} />
-      </group>
-      <mesh geometry={nodes.Back_Buttons_.geometry} material={materials['Inside casing']} position={[0, 22.301, -0.573]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Back_Casing.geometry} material={materials['Inside casing']} position={[0, 22.434, 0]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Battery_Indicator.geometry} material={materials['Battery Indicator']} position={[0.917, 22.549, -0.516]} scale={0.013} />
-      <mesh geometry={nodes.Bottom_Casing.geometry} material={materials['Plate Colour']} position={[0, 22.434, 0]} rotation={[Math.PI, 0, Math.PI]} scale={1.101}>
-        <mesh geometry={nodes.Esfera004.geometry} material={materials['Speaker Colour']} position={[0, -0.149, 0.001]} rotation={[-Math.PI, 0, -Math.PI]} scale={[0.014, 0.007, 0.014]} />
-      </mesh>
-      <mesh geometry={nodes.Bottom_Grip.geometry} material={materials['Speaker Colour']} position={[0, 22.27, -0.493]} rotation={[-Math.PI, 0, 0]} scale={[0.029, 0.007, 0.029]} />
-      <mesh geometry={nodes.Bottom_Screen.geometry} material={materials.Screen} position={[0, 22.446, 0.05]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Bottom_Screen_Casing.geometry} material={materials['Inside casing']} position={[0, 22.434, 0]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Bottom_Screws_.geometry} material={materials['Speaker Colour']} position={[0, 22.277, -0.401]} scale={0.025} />
-      <mesh geometry={nodes.Charging_port.geometry} material={materials['Speaker Colour']} position={[0, 22.343, -0.562]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Control_Casing.geometry} material={materials['Inside casing']} position={[0, 22.434, 0]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Control_Pad.geometry} material={materials.Material} position={[-0.803, 22.458, 0.08]} rotation={[Math.PI, 0, Math.PI]} scale={[4.113, 2.071, 4.113]} />
-      <mesh geometry={nodes.Headphone_Port.geometry} material={materials['Speaker Colour']} position={[0, 22.335, 0.564]} rotation={[Math.PI / 2, 0, 0]} scale={0.036} />
-      <mesh geometry={nodes.Home_Button.geometry} material={materials.Material} position={[0, 22.457, 0.516]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Home_Button_Casing.geometry} material={materials.Material} position={[0, 22.434, 0]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Joystick.geometry} material={materials.Background} position={[-0.803, 22.457, -0.229]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Joystick_C.geometry} material={materials.Background} position={[0.7, 22.434, -0.355]} scale={0.897} />
-      <mesh geometry={nodes.Power_Button.geometry} material={materials['Speaker Colour']} position={[0, 22.434, 0.006]} rotation={[Math.PI, 0, Math.PI]} scale={1.101} />
-      <mesh geometry={nodes.Start_Button.geometry} material={materials.Material} position={[0.7, 22.442, 0.269]} rotation={[Math.PI, 0, Math.PI]} scale={0.641} />
-      <mesh geometry={nodes.Stylus.geometry} material={materials['Speaker Colour']} position={[0.378, 22.342, 0.685]} rotation={[Math.PI / 2, 0, 0]} scale={0.048} />
-      <mesh geometry={nodes.Upper_Casing.geometry} material={materials['Inside casing']} position={[0, 22.492, -0.516]} rotation={[0.785, 0, 0]} scale={1.101}>
-        <mesh geometry={nodes.Carcasa_de_pantalla002.geometry} material={materials['Speaker Colour']} />
-        <mesh geometry={nodes.Carcasa_de_pantalla003.geometry} material={materials['Speaker Colour']} position={[0, 0.026, -0.948]} />
-        <mesh geometry={nodes.Carcasa_de_pantalla004.geometry} material={materials['Plate Colour']} />
-        <mesh geometry={nodes.Carcasa_de_pantalla005.geometry} material={materials['Volume slider']} position={[0, 0.01, -0.365]} />
-        <mesh geometry={nodes.Carcasa_de_pantalla006.geometry} material={materials['Inside casing']} />
-        <mesh geometry={nodes.Carcasa_de_pantalla007.geometry} material={materials['Speaker Colour']} />
-        <mesh geometry={nodes.Carcasa_de_pantalla008.geometry} material={materials['Speaker Colour']} position={[0.062, 0.028, -0.948]} />
-        <mesh geometry={nodes.Esfera005.geometry} material={materials['Top screen grip']} position={[0, 0.035, -0.938]} scale={[0.026, 0.007, 0.026]} />
-        <mesh geometry={nodes.Pantalla.geometry} material={materials.Screen} position={[0, 0.026, -0.469]}>
-          <mesh geometry={nodes.Carcasa_de_pantalla001.geometry} material={materials.InnerScreenMaterial} />
+    <group ref={group} {...props} dispose={null}>
+      <group name="Scene">
+        <group name="Empty" position={[0, 0.844, 0]}>
+          <mesh name="Upper_Casing" geometry={nodes.Upper_Casing.geometry} material={materials['Inside casing']} position={[0, -0.1, -0.516]} scale={1.101}>
+            <mesh name="Carcasa_de_pantalla002" geometry={nodes.Carcasa_de_pantalla002.geometry} material={materials['Speaker Colour']} />
+            <mesh name="Carcasa_de_pantalla003" geometry={nodes.Carcasa_de_pantalla003.geometry} material={materials['Speaker Colour']} position={[0, -0.026, 0.948]} />
+            <mesh name="Carcasa_de_pantalla004" geometry={nodes.Carcasa_de_pantalla004.geometry} material={materials['Plate Colour']} />
+            <mesh name="Carcasa_de_pantalla005" geometry={nodes.Carcasa_de_pantalla005.geometry} material={materials['Volume slider']} position={[0, -0.01, 0.365]} />
+            <mesh name="Carcasa_de_pantalla006" geometry={nodes.Carcasa_de_pantalla006.geometry} material={materials['Inside casing']} />
+            <mesh name="Carcasa_de_pantalla007" geometry={nodes.Carcasa_de_pantalla007.geometry} material={materials['Speaker Colour']} />
+            <mesh name="Carcasa_de_pantalla008" geometry={nodes.Carcasa_de_pantalla008.geometry} material={materials['Speaker Colour']} position={[0.062, -0.028, 0.948]} />
+            <mesh name="Esfera005" geometry={nodes.Esfera005.geometry} material={materials['Top screen grip']} position={[0, -0.035, 0.937]} scale={[0.026, 0.007, 0.026]} />
+            <mesh name="Pantalla" geometry={nodes.Pantalla.geometry} material={materials.Screen} position={[0, -0.026, 0.469]}>
+              <mesh name="Carcasa_de_pantalla001" geometry={nodes.Carcasa_de_pantalla001.geometry} material={materials.InnerScreenMaterial} />
+            </mesh>
+          </mesh>
+        </group>
+        <mesh name="Control_Casing" geometry={nodes.Control_Casing.geometry} material={materials['Inside casing']} position={[0, 0.686, 0]} scale={1.101}>
+          <group name="Home_Button_Casing" />
+          <group name="ABXY_Buttons" position={[0.729, 0.01, -0.125]} scale={0.841}>
+            <mesh name="Circle005" geometry={nodes.Circle005.geometry} material={materials['B Button']} />
+            <mesh name="Circle005_1" geometry={nodes.Circle005_1.geometry} material={materials['A Button']} />
+            <mesh name="Circle005_2" geometry={nodes.Circle005_2.geometry} material={materials['Y Button']} />
+            <mesh name="Circle005_3" geometry={nodes.Circle005_3.geometry} material={materials['X Button']} />
+          </group>
+          <group name="About_Icon" position={[-0.322, 0.017, 0.203]} scale={0.891}>
+            <mesh name="Curve006" geometry={nodes.Curve006.geometry} material={materials['About Icon']} />
+            <mesh name="Curve006_1" geometry={nodes.Curve006_1.geometry} material={materials['UI Button Colour']} />
+            <mesh name="Curve006_2" geometry={nodes.Curve006_2.geometry} material={materials['UI Text Colour']} />
+          </group>
+          <mesh name="Back_Buttons_" geometry={nodes.Back_Buttons_.geometry} material={materials['Inside casing']} position={[0, -0.121, -0.521]} />
+          <mesh name="Back_Casing" geometry={nodes.Back_Casing.geometry} material={materials['Inside casing']} />
+          <mesh name="Battery_Indicator" geometry={nodes.Battery_Indicator.geometry} material={materials['Battery Indicator']} position={[0.833, 0.104, -0.469]} scale={0.012} />
+          <mesh name="Bottom_Casing" geometry={nodes.Bottom_Casing.geometry} material={materials['Plate Colour']}>
+            <mesh name="Esfera004" geometry={nodes.Esfera004.geometry} material={materials['Speaker Colour']} position={[0, -0.149, -0.001]} scale={[0.014, 0.007, 0.014]} />
+          </mesh>
+          <mesh name="Bottom_Grip" geometry={nodes.Bottom_Grip.geometry} material={materials['Speaker Colour']} position={[0, -0.15, -0.448]} scale={[0.026, 0.007, 0.026]} />
+          <mesh name="Bottom_Screen" geometry={nodes.Bottom_Screen.geometry} material={materials.Screen} position={[0, 0.01, 0.045]} />
+          <mesh name="Bottom_Screen_Casing" geometry={nodes.Bottom_Screen_Casing.geometry} material={materials['Inside casing']} />
+          <mesh name="Bottom_Screws_" geometry={nodes.Bottom_Screws_.geometry} material={materials['Speaker Colour']} position={[0, -0.143, -0.365]} scale={0.023} />
+          <mesh name="Charging_port" geometry={nodes.Charging_port.geometry} material={materials['Speaker Colour']} position={[0, -0.083, -0.51]} />
+
+          <group name="Contacts_Icon" position={[0.227, 0.072, 0.242]} scale={0.15} >
+            <mesh name="Text004" geometry={nodes.Text004.geometry} material={materials['UI Text Colour']} />
+            <mesh name="Text004_1" geometry={nodes.Text004_1.geometry} material={materials['UI Button Colour']} />
+            <mesh name="Text004_2" geometry={nodes.Text004_2.geometry} material={materials['Mail Icon']} />
+          </group>
+
+          <mesh name="Control_Pad" geometry={nodes.Control_Pad.geometry} material={materials.Material} position={[-0.729, 0.021, 0.073]} scale={[3.736, 1.881, 3.736]} />
+          <group name="Github_Icon" position={[-0.316, 0.019, 0.095]} scale={0.195} onPointerOver={(e) => {document.body.style.cursor = 'pointer'}} >
+            <mesh name="te" geometry={nodes.te.geometry} material={materials['UI Text Colour']} />
+            <mesh name="te_1" geometry={nodes.te_1.geometry} material={materials['Discord Colour']} />
+            <mesh name="te_2" geometry={nodes.te_2.geometry} material={materials['UI Button Colour']} />
+          </group>
+          <mesh name="Headphone_Port" geometry={nodes.Headphone_Port.geometry} material={materials['Speaker Colour']} position={[0, -0.091, 0.512]} scale={0.032} />
+          <mesh name="Home_Button" geometry={nodes.Home_Button.geometry} material={materials.Material} position={[0, 0.021, 0.469]} />
+          <mesh name="Home_Button_Casing001" geometry={nodes.Home_Button_Casing001.geometry} material={materials['Material.001']} rotation={[Math.PI, 0, Math.PI]} />
+          <mesh name="Joystick" geometry={nodes.Joystick.geometry} material={materials.Background} position={[-0.729, 0.021, -0.208]} />
+          <mesh name="Joystick_C" geometry={nodes.Joystick_C.geometry} material={materials.Background} position={[0.635, 0, -0.323]} scale={0.815} />
+          <mesh name="Power_Button" geometry={nodes.Power_Button.geometry} material={materials['Speaker Colour']} position={[0, 0, 0.005]} />
+          <group name="Projects_Icon" position={[0.229, 0.214, -0.088]} scale={0.168}>
+            <mesh name="Text" geometry={nodes.Text.geometry} material={materials['UI Text Colour']} />
+            <mesh name="Text_1" geometry={nodes.Text_1.geometry} material={materials['UI Button Colour']} />
+            <mesh name="Text_2" geometry={nodes.Text_2.geometry} material={materials['Projects Icon']} />
+          </group>
+          <mesh name="Start_Button" geometry={nodes.Start_Button.geometry} material={materials.Material} position={[0.635, 0.007, 0.245]} scale={0.582} />
+          <mesh name="Stylus" geometry={nodes.Stylus.geometry} material={materials['Speaker Colour']} position={[0.344, -0.084, 0.622]} scale={0.044} />
         </mesh>
-      </mesh>
-      <mesh geometry={nodes.Plane001.geometry} material={materials['UI Button Colour']} position={[0.248, 22.456, -0.164]} scale={0.172} />
-      <mesh geometry={nodes.Curve002.geometry} material={materials['Projects Icon']} position={[0.251, 22.469, -0.196]} scale={1.304} />
-      <mesh geometry={nodes.Text002.geometry} material={materials['UI Text Colour']} position={[0.252, 22.67, -0.097]} scale={0.185} />
-      <mesh geometry={nodes.Plane002.geometry} material={materials['UI Button Colour']} position={[0.248, 22.456, 0.201]} scale={0.172} />
-      <mesh geometry={nodes.Curve003.geometry} material={materials['Mail Icon']} position={[0.158, 22.453, 0.203]} scale={0.783} />
-      <mesh geometry={nodes.Text005.geometry} material={materials['UI Text Colour']} position={[0.25, 22.514, 0.266]} scale={0.165} />
-      <mesh geometry={nodes.Curve.geometry} material={materials['Discord Colour']} position={[-0.336, 22.456, -0.164]} scale={0.805} />
-      <mesh geometry={nodes.Plane.geometry} material={materials['UI Button Colour']} position={[-0.243, 22.456, -0.164]} scale={0.172} />
-      <mesh geometry={nodes.Text.geometry} material={materials['UI Text Colour']} position={[-0.348, 22.456, 0.104]} scale={0.215} />
-      <mesh geometry={nodes.Plane003.geometry} material={materials['UI Button Colour']} position={[-0.243, 22.456, 0.201]} scale={0.172} />
-      <mesh geometry={nodes.Curve004.geometry} material={materials['About Icon']} position={[-0.355, 22.454, 0.224]} scale={0.981} />
-      <mesh geometry={nodes.Text004.geometry} material={materials['UI Text Colour']} position={[-0.243, 22.585, 0.274]} scale={0.223} />
+      </group>
     </group>
   )
+
 }
 
 useGLTF.preload('./models/portfolio.glb')
