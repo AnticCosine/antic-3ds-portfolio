@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.5.3 public/models/portfolio.glb -t
 */
 
 import * as THREE from 'three'
-import React, { useState, type JSX } from 'react'
+import React, { useEffect, useState, type JSX } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
 import { useSpring, animated } from '@react-spring/three'
@@ -100,25 +100,26 @@ export function DS(props: JSX.IntrinsicElements['group']) {
   const baseY = 0.021
 
   const [hovered, setHovered] = useState<string | null>(null);
+  const [ready, setReady] = useState<boolean>(false);
 
   const { contactRotation, contactTransform } = useSpring({
-    contactRotation: hovered == 'contacts' ? Math.PI / 4 : 0,
-    contactTransform: hovered == 'contacts' ? baseY + 0.1 : baseY
+    contactRotation: hovered == 'contacts' && ready == true ? Math.PI / 4 : 0,
+    contactTransform: hovered == 'contacts' && ready == true ? baseY + 0.1 : baseY
   })
 
   const { githubRotation, githubTransform } = useSpring({
-    githubRotation: hovered == 'github' ? Math.PI / 4 : 0,
-    githubTransform: hovered == 'github' ? baseY + 0.1 : baseY
+    githubRotation: hovered == 'github' && ready == true ? Math.PI / 4 : 0,
+    githubTransform: hovered == 'github' && ready == true ? baseY + 0.1 : baseY
   })
 
   const { projectsRotation, projectsTransform } = useSpring({
-    projectsRotation: hovered == 'projects' ? Math.PI / 4 : 0,
-    projectsTransform: hovered == 'projects' ? baseY + 0.1 : baseY
+    projectsRotation: hovered == 'projects' && ready == true ? Math.PI / 4 : 0,
+    projectsTransform: hovered == 'projects' && ready == true ? baseY + 0.1 : baseY
   })
 
   const { aboutRotation, aboutTransform } = useSpring({
-    aboutRotation: hovered == 'about' ? Math.PI / 4 : 0,
-    aboutTransform: hovered == 'about' ? baseY + 0.1 : baseY
+    aboutRotation: hovered == 'about' && ready == true ? Math.PI / 4 : 0,
+    aboutTransform: hovered == 'about' && ready == true ? baseY + 0.1 : baseY
   })
 
 
@@ -129,6 +130,12 @@ export function DS(props: JSX.IntrinsicElements['group']) {
 
 
     if (!actions) return
+
+    const mixer = actions['3DSSpin']?.getMixer()
+
+    actions['3DSSpin']!.timeScale = 1.75
+    actions['3DSUpperSpin']!.timeScale = 1.75
+    actions['3DSRotate']!.timeScale = 1.75
 
     actions['3DSSpin']?.play()
     actions['3DSUpperSpin']?.play()
@@ -142,8 +149,13 @@ export function DS(props: JSX.IntrinsicElements['group']) {
     actions['3DSUpperSpin']!.clampWhenFinished = true;
     actions['3DSRotate']!.clampWhenFinished = true;
 
-  }, [actions])// rotation={[hovered ? Math.PI / 4 : 0, 0, 0]} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}
-  // 0.01
+    mixer?.addEventListener('finished', ()=>setReady(true))
+
+    return () => {
+      mixer?.removeEventListener('finished', ()=>setReady(true))
+    }
+
+  }, [actions])
 
   return (
     <group ref={group} {...props} dispose={null}>
