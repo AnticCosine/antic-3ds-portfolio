@@ -6,11 +6,14 @@ import muteIcon from "./assets/muted-image.svg";
 import unmuteIcon from "./assets/unmuted-image.svg";
 import sunIcon from "./assets/sunset-image.svg";
 import moonIcon from "./assets/moon-image.svg";
+import { About } from './components/About';
 
 function App() {
   const [muted, setMuted] = useState(true);
   const [darkMode, setDarkMode] = useState(() => window.matchMedia?.("(prefers-color-scheme: dark)").matches);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const [showAbout, setShowAbout] = useState(false);
 
   const toggle = () => {
     if (audioRef.current) {
@@ -43,8 +46,10 @@ function App() {
       </audio>
 
       <Canvas camera={{ position: [0.04485357540947098, 2.7383025945742783, 1.5294439829711612] }}>
-        <Experience />
+        <Experience onAboutClick={() => setShowAbout(true)} />
       </Canvas>
+
+      {showAbout && <About onClose={() => setShowAbout(false)} />}
     </div>
   )
 }

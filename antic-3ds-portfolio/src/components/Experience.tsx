@@ -1,7 +1,7 @@
 import { Environment, OrbitControls } from "@react-three/drei"
 import { DS } from "./3DS";
 
-export const Experience = () => {
+export const Experience = ({ onAboutClick }: { onAboutClick: () => void }) => {
     return (
         <>
             <Environment preset="sunset" backgroundIntensity={0.3}/>
@@ -11,7 +11,7 @@ export const Experience = () => {
             
             <OrbitControls target={[0, 1, 0]} />
             <CameraLogger />
-            <DS />
+            <DS onAboutClick={onAboutClick} />
         </>
     );
 }

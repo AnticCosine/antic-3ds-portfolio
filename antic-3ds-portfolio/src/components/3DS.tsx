@@ -8,6 +8,7 @@ import React, { useEffect, useState, type JSX } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
 import { useSpring, animated } from '@react-spring/three'
+import { About } from './About'
 
 type ActionName = '3DSSpin' | '3DSUpperSpin' | '3DSRotate'
 
@@ -92,7 +93,11 @@ type GLTFResult = GLTF & {
   animations: GLTFAction[]
 }
 
-export function DS(props: JSX.IntrinsicElements['group']) {
+type DSProps = JSX.IntrinsicElements['group'] & {
+  onAboutClick: () => void;
+};
+
+export function DS({ onAboutClick, ...props }: DSProps) {
   const group = React.useRef<THREE.Group>(null!)
   const { nodes, materials, animations } = useGLTF('./models/portfolio.glb') as unknown as GLTFResult
   const { actions } = useAnimations(animations, group)
@@ -185,10 +190,13 @@ export function DS(props: JSX.IntrinsicElements['group']) {
           <animated.group name="About_Icon" position={[-0.221, 0.021, 0.339]} scale={0.891}
             position-y={ aboutTransform }  rotation-x={ aboutRotation }
             onPointerOver={() => { setHovered('about'), document.body.style.cursor = 'pointer' }}
-            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}>
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
+            onClick={onAboutClick}>
             <mesh name="Curve006" geometry={nodes.Curve006.geometry} material={materials['About Icon']} />
             <mesh name="Curve006_1" geometry={nodes.Curve006_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Curve006_2" geometry={nodes.Curve006_2.geometry} material={materials['UI Text Colour']} />
+
+            
           </animated.group>
           <mesh name="Back_Buttons_" geometry={nodes.Back_Buttons_.geometry} material={materials['Inside casing']} position={[0, -0.121, -0.521]} />
           <mesh name="Back_Casing" geometry={nodes.Back_Casing.geometry} material={materials['Inside casing']} />
@@ -215,7 +223,8 @@ export function DS(props: JSX.IntrinsicElements['group']) {
           <animated.group name="Github_Icon" position={[-0.221, 0.021, 0.008]} scale={0.195}
             position-y={ githubTransform }  rotation-x={ githubRotation }
             onPointerOver={() => { setHovered('github'), document.body.style.cursor = 'pointer' }}
-            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}>
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
+            onClick={() => {window.open("https://github.com/AnticCosine")}}>
             <mesh name="te" geometry={nodes.te.geometry} material={materials['UI Text Colour']} />
             <mesh name="te_1" geometry={nodes.te_1.geometry} material={materials['Discord Colour']} />
             <mesh name="te_2" geometry={nodes.te_2.geometry} material={materials['UI Button Colour']} />
