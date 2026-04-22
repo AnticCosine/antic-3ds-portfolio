@@ -14,7 +14,7 @@ export const Experience = ({ onAboutClick, onProjectsClick }: ExperienceProps) =
 
             
             
-            <OrbitControls target={[0, 1, 0]} />
+            <OrbitControls target={[0, 1, 0]}/>
             <CameraLogger />
             <DS onAboutClick={onAboutClick} onProjectsClick={onProjectsClick}/>
         </>
@@ -46,3 +46,5 @@ function CameraLogger() {
 
   return null
 }
+
+

@@ -15,6 +15,7 @@ function App() {
 
   const [showAbout, setShowAbout] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
 
   const toggle = () => {
     if (audioRef.current) {
@@ -45,8 +46,8 @@ function App() {
       <audio ref={audioRef} loop>
         <source src="/settingsMusic.mp3" type="audio/mpeg" />
       </audio>
-
-      <Canvas camera={{ position: [0.04485357540947098, 2.7383025945742783, 1.5294439829711612] }}>
+      
+      <Canvas camera={{ position: isMobile ? [-0.007824728253362353, 3.2341242227350975, 1.9913967319358334] : [0.005342358227324796, 2.5777645059205843, 1.3744889845467074] }}>
         <Experience onAboutClick={() => setShowAbout(true)} onProjectsClick={() => setShowProjects(true)} />
       </Canvas>
 
