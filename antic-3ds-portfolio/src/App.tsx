@@ -6,7 +6,7 @@ import muteIcon from "./assets/muted-image.svg";
 import unmuteIcon from "./assets/unmuted-image.svg";
 import sunIcon from "./assets/sunset-image.svg";
 import moonIcon from "./assets/moon-image.svg";
-import { About } from './components/About';
+import { About, Projects } from './components/Popups';
 
 function App() {
   const [muted, setMuted] = useState(true);
@@ -14,6 +14,7 @@ function App() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const [showAbout, setShowAbout] = useState(false);
+  const [showProjects, setShowProjects] = useState(false);
 
   const toggle = () => {
     if (audioRef.current) {
@@ -46,10 +47,11 @@ function App() {
       </audio>
 
       <Canvas camera={{ position: [0.04485357540947098, 2.7383025945742783, 1.5294439829711612] }}>
-        <Experience onAboutClick={() => setShowAbout(true)} />
+        <Experience onAboutClick={() => setShowAbout(true)} onProjectsClick={() => setShowProjects(true)} />
       </Canvas>
 
       {showAbout && <About onClose={() => setShowAbout(false)} />}
+      {showProjects && <Projects onClose={() => setShowProjects(false)} />}
     </div>
   )
 }

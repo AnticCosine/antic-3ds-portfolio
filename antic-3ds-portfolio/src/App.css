@@ -21,9 +21,9 @@
   display: grid;
   place-items: center;
 
-  background: #f0f0f0;
+  background: #f2ebac;
 
-  border: 8px solid #2c2c2c;
+  border: 8px solid #90875b;
   border-radius: 16px;
 
   cursor: pointer;
@@ -56,9 +56,9 @@
   display: grid;
   place-items: center;
 
-  background: #f0f0f0;
+  background: #f2ebac;
 
-  border: 8px solid #2c2c2c;
+  border: 8px solid #90875b;
   border-radius: 16px;
 
   cursor: pointer;

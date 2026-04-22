@@ -8,7 +8,7 @@ import React, { useEffect, useState, type JSX } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
 import { useSpring, animated } from '@react-spring/three'
-import { About } from './About'
+import { About } from './Popups'
 
 type ActionName = '3DSSpin' | '3DSUpperSpin' | '3DSRotate'
 
@@ -93,11 +93,9 @@ type GLTFResult = GLTF & {
   animations: GLTFAction[]
 }
 
-type DSProps = JSX.IntrinsicElements['group'] & {
-  onAboutClick: () => void;
-};
+type DSProps = JSX.IntrinsicElements['group'] & { onAboutClick: () => void; } & { onProjectsClick: () => void; };
 
-export function DS({ onAboutClick, ...props }: DSProps) {
+export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
   const group = React.useRef<THREE.Group>(null!)
   const { nodes, materials, animations } = useGLTF('./models/portfolio.glb') as unknown as GLTFResult
   const { actions } = useAnimations(animations, group)
@@ -213,7 +211,8 @@ export function DS({ onAboutClick, ...props }: DSProps) {
           <animated.group name="Contacts_Icon" position={[0.226, 0.021, 0.339]} scale={0.15}
             position-y={ contactTransform }  rotation-x={ contactRotation }
             onPointerOver={() => { setHovered('contacts'), document.body.style.cursor = 'pointer' }}
-            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}>
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
+            onClick={() => { window.location.href = "mailto:anticcosine@gmail.com"; }}>
             <mesh name="Text004" geometry={nodes.Text004.geometry} material={materials['UI Text Colour']} />
             <mesh name="Text004_1" geometry={nodes.Text004_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Text004_2" geometry={nodes.Text004_2.geometry} material={materials['Mail Icon']} />
@@ -240,7 +239,8 @@ export function DS({ onAboutClick, ...props }: DSProps) {
           <animated.group name="Projects_Icon" position={[0.226, 0.021, 0.008]} scale={0.168}
             position-y={ projectsTransform }  rotation-x={ projectsRotation }
             onPointerOver={() => { setHovered('projects'), document.body.style.cursor = 'pointer' }}
-            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}>
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
+            onClick={onProjectsClick}>
             <mesh name="Text" geometry={nodes.Text.geometry} material={materials['UI Text Colour']} />
             <mesh name="Text_1" geometry={nodes.Text_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Text_2" geometry={nodes.Text_2.geometry} material={materials['Projects Icon']} />

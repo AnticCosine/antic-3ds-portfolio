@@ -1,0 +1,236 @@
+@font-face {
+  font-family: "maru";
+  src: url("../assets/maru.ttf") format("opentype");
+}
+
+.about-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.158);
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 800;
+
+  font-family: "maru", sans-serif;
+}
+
+.about-box {
+  background: #f2ebac;
+  border: 10px solid #90875b;
+  padding: 32px;
+  border-radius: 24px;
+  width: 700px;
+  height: 600px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+  display: flex;
+  flex-direction: column;
+  
+  position: relative;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+
+  height: 100%;
+  min-height: 0;
+}
+
+.about-wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  width: 100%;
+}
+
+.about-body {
+    padding-right: 30px;
+}
+
+.about-wrapper::-webkit-scrollbar { width: 12px; }
+.about-wrapper::-webkit-scrollbar-track { background: transparent; }
+.about-wrapper::-webkit-scrollbar-thumb {
+  background: #90875b;
+  border-radius: 12px;
+  border: 3px solid #f2ebac;
+}
+.about-wrapper::-webkit-scrollbar-thumb:hover { background: #7a724c; }
+
+.header {
+  display: flex;
+  padding: 10px 80px; 
+  border-radius: 32px;
+  background-color: #ebe07e;
+  box-shadow: #0000003d 0 3px 8px;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.gif {
+  border: 10px solid #90875b;
+  border-radius: 24px;
+  width: 100%;
+  max-height: 500px;
+}
+
+
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -48px;
+  left: -40px;
+  
+  width: 72px;
+  height: 72px;
+
+  background: #f2ebac;
+  border: 8px solid #90875b;
+
+  border-radius: 16px;
+  cursor: pointer;
+
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.button:hover {
+  transform: scale(1.4) rotate(-12deg);
+}
+
+.button:active {
+  transform: scale(0.98) rotate(-6deg);
+}
+
+.button img {
+  width: 32px;
+  height: 32px;
+}
+
+.about-text {
+  font-size: 24px;
+}
+
+.divider {
+  border: 1px solid #90875b;
+}
+
+
+.projects-wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  width: 100%;
+}
+
+.projects-body {
+  padding: 12px 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  flex-direction: row;
+
+  gap: 32px;
+
+  margin-top: 8px;
+}
+
+.pokemon-sleep img,
+.discord img {
+  width: 300px;
+  height: 300px;
+
+  border: 6px solid #90875b;
+  border-radius: 24px;
+
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.pokemon-sleep img:hover,
+.discord img:hover {
+  transform: scale(0.95);
+
+  cursor: pointer;
+}
+
+.projects-wrapper::-webkit-scrollbar { width: 12px; }
+.projects-wrapper::-webkit-scrollbar-track { background: transparent; }
+.projects-wrapper::-webkit-scrollbar-thumb {
+  background: #90875b;
+  border-radius: 12px;
+  border: 3px solid #f2ebac;
+
+}
+.projects-wrapper::-webkit-scrollbar-thumb:hover { background: #7a724c; }
+
+
+@media (max-width: 500px) {
+  .header {
+    padding: 10px 20px;
+  }
+
+  .about-text {
+    font-size: 18px;
+  }
+
+  .portfolio-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 870px) {
+
+  .about-box {
+    width: calc(100vw - 32px);
+    height: calc(100dvh - 80px);
+    max-width: 100%;
+    padding: 20px 16px;
+    border-radius: 16px;
+    border-width: 6px;
+    box-sizing: border-box;
+  }
+
+  .button {
+    width: 52px;
+    height: 52px;
+    top: 5px;
+    left: 5px;
+  }
+
+  .button img {
+    width: 24px;
+    height: 24px;
+  }
+
+
+  .projects-body {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .pokemon-sleep img,
+  .discord img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    aspect-ratio: 16 / 12;
+    object-fit:cover;
+    display: block;
+  }
+}
+
