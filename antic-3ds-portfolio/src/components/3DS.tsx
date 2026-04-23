@@ -10,7 +10,7 @@ import type { GLTF } from 'three-stdlib'
 import { useSpring, animated } from '@react-spring/three'
 import { About } from './Popups'
 
-type ActionName = '3DSSpin' | '3DSUpperSpin' | '3DSRotate'
+type ActionName = '3DSSpin' | 'AboutAnimation' | 'ContactsAnimation' | 'GithubAnimation' | 'ProjectsAnimation' | '3DSUpperSpin' | '3DSRotate'
 
 interface GLTFAction extends THREE.AnimationClip {
   name: ActionName
@@ -30,13 +30,22 @@ type GLTFResult = GLTF & {
     Pantalla: THREE.Mesh
     Carcasa_de_pantalla001: THREE.Mesh
     Control_Casing: THREE.Mesh
+    Curve006: THREE.Mesh
+    Curve006_1: THREE.Mesh
+    Curve006_2: THREE.Mesh
+    Text004: THREE.Mesh
+    Text004_1: THREE.Mesh
+    Text004_2: THREE.Mesh
+    te: THREE.Mesh
+    te_1: THREE.Mesh
+    te_2: THREE.Mesh
+    Text: THREE.Mesh
+    Text_1: THREE.Mesh
+    Text_2: THREE.Mesh
     Circle005: THREE.Mesh
     Circle005_1: THREE.Mesh
     Circle005_2: THREE.Mesh
     Circle005_3: THREE.Mesh
-    Curve006: THREE.Mesh
-    Curve006_1: THREE.Mesh
-    Curve006_2: THREE.Mesh
     Back_Buttons_: THREE.Mesh
     Back_Casing: THREE.Mesh
     Battery_Indicator: THREE.Mesh
@@ -47,13 +56,7 @@ type GLTFResult = GLTF & {
     Bottom_Screen_Casing: THREE.Mesh
     Bottom_Screws_: THREE.Mesh
     Charging_port: THREE.Mesh
-    Text004: THREE.Mesh
-    Text004_1: THREE.Mesh
-    Text004_2: THREE.Mesh
     Control_Pad: THREE.Mesh
-    te: THREE.Mesh
-    te_1: THREE.Mesh
-    te_2: THREE.Mesh
     Headphone_Port: THREE.Mesh
     Home_Button: THREE.Mesh
     Home_Button_Casing: THREE.Mesh
@@ -61,9 +64,6 @@ type GLTFResult = GLTF & {
     Joystick: THREE.Mesh
     Joystick_C: THREE.Mesh
     Power_Button: THREE.Mesh
-    Text: THREE.Mesh
-    Text_1: THREE.Mesh
-    Text_2: THREE.Mesh
     Start_Button: THREE.Mesh
     Stylus: THREE.Mesh
   }
@@ -75,20 +75,20 @@ type GLTFResult = GLTF & {
     ['Top screen grip']: THREE.MeshStandardMaterial
     Screen: THREE.MeshStandardMaterial
     InnerScreenMaterial: THREE.MeshStandardMaterial
+    ['About Icon']: THREE.MeshStandardMaterial
+    ['UI Button Colour']: THREE.MeshStandardMaterial
+    ['UI Text Colour']: THREE.MeshStandardMaterial
+    ['Mail Icon']: THREE.MeshStandardMaterial
+    ['Discord Colour']: THREE.MeshStandardMaterial
+    ['Projects Icon']: THREE.MeshStandardMaterial
     ['B Button']: THREE.MeshStandardMaterial
     ['A Button']: THREE.MeshStandardMaterial
     ['Y Button']: THREE.MeshStandardMaterial
     ['X Button']: THREE.MeshStandardMaterial
-    ['About Icon']: THREE.MeshStandardMaterial
-    ['UI Button Colour']: THREE.MeshStandardMaterial
-    ['UI Text Colour']: THREE.MeshStandardMaterial
     ['Battery Indicator']: THREE.MeshStandardMaterial
-    ['Mail Icon']: THREE.MeshStandardMaterial
     Material: THREE.MeshStandardMaterial
-    ['Discord Colour']: THREE.MeshStandardMaterial
     ['Material.001']: THREE.MeshStandardMaterial
     Background: THREE.MeshStandardMaterial
-    ['Projects Icon']: THREE.MeshStandardMaterial
   }
   animations: GLTFAction[]
 }
@@ -139,18 +139,34 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
     actions['3DSSpin']!.timeScale = 1.75
     actions['3DSUpperSpin']!.timeScale = 1.75
     actions['3DSRotate']!.timeScale = 1.75
+    actions['ProjectsAnimation']!.timeScale = 1.75
+    actions['AboutAnimation']!.timeScale = 1.75
+    actions['ContactsAnimation']!.timeScale = 1.75
+    actions['GithubAnimation']!.timeScale = 1.75
 
     actions['3DSSpin']?.play()
     actions['3DSUpperSpin']?.play()
     actions['3DSRotate']?.play()
+    actions['ProjectsAnimation']?.play()
+    actions['AboutAnimation']?.play()
+    actions['ContactsAnimation']?.play()
+    actions['GithubAnimation']?.play()
 
     actions['3DSSpin']?.setLoop(THREE.LoopOnce, 1)
     actions['3DSUpperSpin']?.setLoop(THREE.LoopOnce, 1)
     actions['3DSRotate']?.setLoop(THREE.LoopOnce, 1)
+    actions['ProjectsAnimation']?.setLoop(THREE.LoopOnce, 1)
+    actions['AboutAnimation']?.setLoop(THREE.LoopOnce, 1)
+    actions['ContactsAnimation']?.setLoop(THREE.LoopOnce, 1)
+    actions['GithubAnimation']?.setLoop(THREE.LoopOnce, 1)
 
     actions['3DSSpin']!.clampWhenFinished = true;
     actions['3DSUpperSpin']!.clampWhenFinished = true;
     actions['3DSRotate']!.clampWhenFinished = true;
+    actions['ProjectsAnimation']!.clampWhenFinished = true;
+    actions['AboutAnimation']!.clampWhenFinished = true;
+    actions['ContactsAnimation']!.clampWhenFinished = true;
+    actions['GithubAnimation']!.clampWhenFinished = true;
 
     mixer?.addEventListener('finished', ()=>setReady(true))
 
@@ -185,17 +201,6 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
             <mesh name="Circle005_2" geometry={nodes.Circle005_2.geometry} material={materials['Y Button']} />
             <mesh name="Circle005_3" geometry={nodes.Circle005_3.geometry} material={materials['X Button']} />
           </group>
-          <animated.group name="About_Icon" position={[-0.221, 0.021, 0.339]} scale={0.891}
-            position-y={ aboutTransform }  rotation-x={ aboutRotation }
-            onPointerOver={() => { setHovered('about'), document.body.style.cursor = 'pointer' }}
-            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
-            onClick={onAboutClick}>
-            <mesh name="Curve006" geometry={nodes.Curve006.geometry} material={materials['About Icon']} />
-            <mesh name="Curve006_1" geometry={nodes.Curve006_1.geometry} material={materials['UI Button Colour']} />
-            <mesh name="Curve006_2" geometry={nodes.Curve006_2.geometry} material={materials['UI Text Colour']} />
-
-            
-          </animated.group>
           <mesh name="Back_Buttons_" geometry={nodes.Back_Buttons_.geometry} material={materials['Inside casing']} position={[0, -0.121, -0.521]} />
           <mesh name="Back_Casing" geometry={nodes.Back_Casing.geometry} material={materials['Inside casing']} />
           <mesh name="Battery_Indicator" geometry={nodes.Battery_Indicator.geometry} material={materials['Battery Indicator']} position={[0.833, 0.104, -0.469]} scale={0.012} />
@@ -208,26 +213,9 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
           <mesh name="Bottom_Screws_" geometry={nodes.Bottom_Screws_.geometry} material={materials['Speaker Colour']} position={[0, -0.143, -0.365]} scale={0.023} />
           <mesh name="Charging_port" geometry={nodes.Charging_port.geometry} material={materials['Speaker Colour']} position={[0, -0.083, -0.51]} />
 
-          <animated.group name="Contacts_Icon" position={[0.226, 0.021, 0.339]} scale={0.15}
-            position-y={ contactTransform }  rotation-x={ contactRotation }
-            onPointerOver={() => { setHovered('contacts'), document.body.style.cursor = 'pointer' }}
-            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
-            onClick={() => { window.location.href = "mailto:anticcosine@gmail.com"; }}>
-            <mesh name="Text004" geometry={nodes.Text004.geometry} material={materials['UI Text Colour']} />
-            <mesh name="Text004_1" geometry={nodes.Text004_1.geometry} material={materials['UI Button Colour']} />
-            <mesh name="Text004_2" geometry={nodes.Text004_2.geometry} material={materials['Mail Icon']} />
-          </animated.group>
-
+          
           <mesh name="Control_Pad" geometry={nodes.Control_Pad.geometry} material={materials.Material} position={[-0.729, 0.021, 0.073]} scale={[3.736, 1.881, 3.736]} />
-          <animated.group name="Github_Icon" position={[-0.221, 0.021, 0.008]} scale={0.195}
-            position-y={ githubTransform }  rotation-x={ githubRotation }
-            onPointerOver={() => { setHovered('github'), document.body.style.cursor = 'pointer' }}
-            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
-            onClick={() => {window.open("https://github.com/AnticCosine")}}>
-            <mesh name="te" geometry={nodes.te.geometry} material={materials['UI Text Colour']} />
-            <mesh name="te_1" geometry={nodes.te_1.geometry} material={materials['Discord Colour']} />
-            <mesh name="te_2" geometry={nodes.te_2.geometry} material={materials['UI Button Colour']} />
-          </animated.group>
+          
           <mesh name="Headphone_Port" geometry={nodes.Headphone_Port.geometry} material={materials['Speaker Colour']} position={[0, -0.091, 0.512]} scale={0.032} />
           <mesh name="Home_Button" geometry={nodes.Home_Button.geometry} material={materials.Material} position={[0, 0.021, 0.469]} />
           <mesh name="Home_Button_Casing" geometry={nodes.Home_Button_Casing.geometry} material={materials.Material} />
@@ -236,7 +224,34 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
           <mesh name="Joystick_C" geometry={nodes.Joystick_C.geometry} material={materials.Background} position={[0.635, 0, -0.323]} scale={0.815} />
           <mesh name="Power_Button" geometry={nodes.Power_Button.geometry} material={materials['Speaker Colour']} position={[0, 0, 0.005]} />
 
-          <animated.group name="Projects_Icon" position={[0.226, 0.021, 0.008]} scale={0.168}
+          <animated.group name="About_Icon" position={[-0.221, -0.006, 0.339]} scale={0.891}
+            position-y={ aboutTransform }  rotation-x={ aboutRotation }
+            onPointerOver={() => { setHovered('about'), document.body.style.cursor = 'pointer' }}
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
+            onClick={onAboutClick}>
+            <mesh name="Curve006" geometry={nodes.Curve006.geometry} material={materials['About Icon']} />
+            <mesh name="Curve006_1" geometry={nodes.Curve006_1.geometry} material={materials['UI Button Colour']} />
+            <mesh name="Curve006_2" geometry={nodes.Curve006_2.geometry} material={materials['UI Text Colour']} />
+          </animated.group>
+          <animated.group name="Contacts_Icon" position={[0.226, -0.006, 0.339]} scale={0.15}
+            position-y={ contactTransform }  rotation-x={ contactRotation }
+            onPointerOver={() => { setHovered('contacts'), document.body.style.cursor = 'pointer' }}
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
+            onClick={() => { window.location.href = "mailto:anticcosine@gmail.com"; }}>
+            <mesh name="Text004" geometry={nodes.Text004.geometry} material={materials['UI Text Colour']} />
+            <mesh name="Text004_1" geometry={nodes.Text004_1.geometry} material={materials['UI Button Colour']} />
+            <mesh name="Text004_2" geometry={nodes.Text004_2.geometry} material={materials['Mail Icon']} />
+          </animated.group>
+          <animated.group name="Github_Icon" position={[-0.221, -0.006, 0.008]} scale={0.195}
+            position-y={ githubTransform }  rotation-x={ githubRotation }
+            onPointerOver={() => { setHovered('github'), document.body.style.cursor = 'pointer' }}
+            onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
+            onClick={() => {window.open("https://github.com/AnticCosine")}}>
+            <mesh name="te" geometry={nodes.te.geometry} material={materials['UI Text Colour']} />
+            <mesh name="te_1" geometry={nodes.te_1.geometry} material={materials['Discord Colour']} />
+            <mesh name="te_2" geometry={nodes.te_2.geometry} material={materials['UI Button Colour']} />
+          </animated.group>
+          <animated.group name="Projects_Icon" position={[0.226, -0.006, 0.008]} scale={0.168}
             position-y={ projectsTransform }  rotation-x={ projectsRotation }
             onPointerOver={() => { setHovered('projects'), document.body.style.cursor = 'pointer' }}
             onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}

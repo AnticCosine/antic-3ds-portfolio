@@ -1,33 +1,114 @@
 import { Canvas } from '@react-three/fiber'
 import './App.css'
 import { Experience } from './components/Experience'
-import { useRef, useState } from 'react'
-import muteIcon from "./assets/muted-image.svg";
-import unmuteIcon from "./assets/unmuted-image.svg";
+import { useEffect, useRef, useState } from 'react'
 import sunIcon from "./assets/sunset-image.svg";
 import moonIcon from "./assets/moon-image.svg";
 import { About, Projects } from './components/Popups';
 
 function App() {
-  const [muted, setMuted] = useState(true);
+  const tracks = [
+    {
+      src: "/settingsMusic.mp3",
+      title: "Settings Music",
+      color: "#c0504d"
+    },
+    {
+      src: "/1AMACNL.mp3",
+      title: "1 A.M. ACNL",
+      color: "#62bb47"
+    },
+    {
+      src: "/Bubblegum.mp3",
+      title: "Bubblegum K.K.",
+      color: "#ffc5e6"
+    },
+    {
+      src: "/eShopMusic2015.mp3",
+      title: "eShop Music",
+      color: "#f67412"
+    },
+    {
+      src: "/5PMACNL.mp3",
+      title: "5 P.M. ACNL",
+      color: "#62bb47"
+    }
+  ]
+
+
+  const [paused, setPaused] = useState(true);
   const [darkMode, setDarkMode] = useState(() => window.matchMedia?.("(prefers-color-scheme: dark)").matches);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const [showAbout, setShowAbout] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+  const [currentTrack, setCurrentTrack] = useState(0);
 
-  const toggle = () => {
-    if (audioRef.current) {
-      audioRef.current.muted = !muted;
-      setMuted(!muted);
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.src = tracks[currentTrack].src;
+    audio.load();
+
+    const handleEnded = () => {
+      setCurrentTrack((prev) => (prev + 1) % tracks.length);
+    };
+
+    audio.addEventListener("ended", handleEnded);
+
+    if (!paused) {
+      audio.play().catch(() => {});
     }
 
-    muted ? audioRef.current?.play() : audioRef.current?.pause()
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [currentTrack]);
+
+  const nextTrack = () => {
+    setCurrentTrack((prev) => (prev + 1) % tracks.length);
+  };
+
+  const toggle = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+
+    setPaused(!paused);
   };
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
+
+      <div className='music-player'>
+        <div
+          className="music-player-art"
+          style={{
+            background: `${tracks[currentTrack].color}`
+          }}
+        />
+        <div className="music-player-info">
+          <div className="music-player-title">{tracks[currentTrack].title}</div>
+          <div className="music-player-sub">Antics Playlist</div>
+        </div>
+        <button className="music-player-btn" onClick={toggle}>
+          {paused
+            ? <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2.5L8 6l-6 3.5V2.5z" fill="#f2ebac"/></svg>
+            : <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="2" y="1.5" width="3" height="9" rx="1" fill="#f2ebac"/><rect x="7" y="1.5" width="3" height="9" rx="1" fill="#f2ebac"/></svg>
+          }
+        </button>
+        <button className="next-music-btn" onClick={nextTrack}>
+          {<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 2.5L9 6l-6 3.5V2.5z" fill="#f2ebac"/><rect x="9.5" y="2.5" width="1" height="7" fill="#f2ebac"/></svg>}
+        </button>
+      </div>
+
       <button onClick={() => setDarkMode(!darkMode)} className="theme-button">
         <img
           src={darkMode ? moonIcon : sunIcon}
@@ -35,17 +116,8 @@ function App() {
           alt="theme toggle"
         />
       </button>
-      <button onClick={toggle} className="audio-button">
-        <img
-          src={muted ? muteIcon : unmuteIcon}
-          alt={muted ? "Muted" : "Unmuted"}
-          className="audio-icon"
-        />
-      </button>
 
-      <audio ref={audioRef} loop>
-        <source src="/settingsMusic.mp3" type="audio/mpeg" />
-      </audio>
+      <audio ref={audioRef} loop />
       
       <Canvas camera={{ position: isMobile ? [-0.007824728253362353, 3.2341242227350975, 1.9913967319358334] : [0.005342358227324796, 2.5777645059205843, 1.3744889845467074] }}>
         <Experience onAboutClick={() => setShowAbout(true)} onProjectsClick={() => setShowProjects(true)} />
