@@ -120,7 +120,7 @@ function App() {
       <audio ref={audioRef} loop />
       
       <Canvas camera={{ position: isMobile ? [-0.007824728253362353, 3.2341242227350975, 1.9913967319358334] : [0.005342358227324796, 2.5777645059205843, 1.3744889845467074] }}>
-        <Experience onAboutClick={() => setShowAbout(true)} onProjectsClick={() => setShowProjects(true)} />
+        <Experience onAboutClick={() => setShowAbout(true)} onProjectsClick={() => setShowProjects(true)} isDarkMode={darkMode}/>
       </Canvas>
 
       {showAbout && <About onClose={() => setShowAbout(false)} />}

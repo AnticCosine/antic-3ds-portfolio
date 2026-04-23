@@ -167,10 +167,6 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
     scaleSelect: hovered == 'select' && ready == true ? 0.8 : 0.582
   });
 
-
-
-  console.log(actions)
-
   React.useEffect(() => {
 
 

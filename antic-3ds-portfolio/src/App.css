@@ -6,7 +6,7 @@
 .app {
   width: 100vw;
   height: 100vh;
-  background-color: rgb(223, 223, 223);
+  background-color: rgb(175, 175, 175);
   transition: background-color 0.6s ease;
 }
 
