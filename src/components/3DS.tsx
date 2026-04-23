@@ -8,7 +8,6 @@ import React, { useEffect, useState, type JSX } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
 import { useSpring, animated } from '@react-spring/three'
-import { About } from './Popups'
 
 type ActionName = '3DSSpin' | 'AboutAnimation' | 'ContactsAnimation' | 'GithubAnimation' | 'ProjectsAnimation' | '3DSUpperSpin' | '3DSRotate'
 

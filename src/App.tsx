@@ -42,7 +42,7 @@ function App() {
 
   const [showAbout, setShowAbout] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 450);
+  const [isMobile] = useState(window.innerWidth < 450);
   const [currentTrack, setCurrentTrack] = useState(0);
 
   useEffect(() => {

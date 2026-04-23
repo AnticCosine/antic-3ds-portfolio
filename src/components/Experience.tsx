@@ -1,7 +1,5 @@
 import { Environment, OrbitControls } from "@react-three/drei"
 import { DS } from "./3DS";
-import { useFrame, useThree } from "@react-three/fiber";
-import { useRef } from "react";
 
 type ExperienceProps = {
   onAboutClick: () => void;
