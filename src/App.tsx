@@ -42,7 +42,7 @@ function App() {
 
   const [showAbout, setShowAbout] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 450);
   const [currentTrack, setCurrentTrack] = useState(0);
 
   useEffect(() => {
@@ -119,8 +119,8 @@ function App() {
 
       <audio ref={audioRef} loop />
       
-      <Canvas camera={{ position: isMobile ? [-0.007824728253362353, 3.2341242227350975, 1.9913967319358334] : [0.005342358227324796, 2.5777645059205843, 1.3744889845467074] }}>
-        <Experience onAboutClick={() => setShowAbout(true)} onProjectsClick={() => setShowProjects(true)} isDarkMode={darkMode}/>
+      <Canvas camera={{ position: isMobile ? [-0.0031266243277873504, 3.908082291118143, 2.8956510541614993] : [-0.003756461201234294, 3.1576242011477875, 2.0601095691442692], fov: 70 } }>
+        <Experience onAboutClick={() => setShowAbout(true)} onProjectsClick={() => setShowProjects(true)} isDarkMode={darkMode} isMobile={isMobile}/>
       </Canvas>
 
       {showAbout && <About onClose={() => setShowAbout(false)} />}
