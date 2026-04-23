@@ -100,7 +100,7 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
   const { nodes, materials, animations } = useGLTF('./models/portfolio.glb') as unknown as GLTFResult
   const { actions } = useAnimations(animations, group)
 
-  const baseY = 0.021
+  const baseY = 0.0301745970693566
 
   const [hovered, setHovered] = useState<string | null>(null);
   const [ready, setReady] = useState<boolean>(false);
@@ -209,6 +209,7 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
 
     return () => {
       mixer?.removeEventListener('finished', ()=>setReady(true))
+      
     }
 
   }, [actions])
@@ -310,36 +311,36 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
 
           <animated.group name="About_Icon" position={[-0.221, -0.006, 0.339]} scale={0.891}
             position-y={ aboutTransform }  rotation-x={ aboutRotation }
-            onPointerOver={() => { setHovered('about'), document.body.style.cursor = 'pointer' }}
+            onPointerOver={() => {ready ? setHovered('about') : null, ready ? document.body.style.cursor = 'pointer' : null }}
             onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
-            onClick={onAboutClick}>
+            onClick={ready ? onAboutClick : undefined}>
             <mesh name="Curve006" geometry={nodes.Curve006.geometry} material={materials['About Icon']} />
             <mesh name="Curve006_1" geometry={nodes.Curve006_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Curve006_2" geometry={nodes.Curve006_2.geometry} material={materials['UI Text Colour']} />
           </animated.group>
           <animated.group name="Contacts_Icon" position={[0.226, -0.006, 0.339]} scale={0.15}
             position-y={ contactTransform }  rotation-x={ contactRotation }
-            onPointerOver={() => { setHovered('contacts'), document.body.style.cursor = 'pointer' }}
+            onPointerOver={() => {ready ? setHovered('contacts') : null, ready ? document.body.style.cursor = 'pointer' : null }}
             onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
-            onClick={() => { window.location.href = "mailto:anticcosine@gmail.com"; }}>
+            onClick={() => {ready ? window.location.href = "mailto:anticcosine@gmail.com" : undefined }}>
             <mesh name="Text004" geometry={nodes.Text004.geometry} material={materials['UI Text Colour']} />
             <mesh name="Text004_1" geometry={nodes.Text004_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Text004_2" geometry={nodes.Text004_2.geometry} material={materials['Mail Icon']} />
           </animated.group>
           <animated.group name="Github_Icon" position={[-0.221, -0.006, 0.008]} scale={0.195}
             position-y={ githubTransform }  rotation-x={ githubRotation }
-            onPointerOver={() => { setHovered('github'), document.body.style.cursor = 'pointer' }}
+            onPointerOver={() => {ready ? setHovered('github') : null, ready ? document.body.style.cursor = 'pointer' : null }}
             onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
-            onClick={() => {window.open("https://github.com/AnticCosine")}}>
+            onClick={() => {ready ? window.open("https://github.com/AnticCosine") : undefined}}>
             <mesh name="te" geometry={nodes.te.geometry} material={materials['UI Text Colour']} />
             <mesh name="te_1" geometry={nodes.te_1.geometry} material={materials['Discord Colour']} />
             <mesh name="te_2" geometry={nodes.te_2.geometry} material={materials['UI Button Colour']} />
           </animated.group>
           <animated.group name="Projects_Icon" position={[0.226, -0.006, 0.008]} scale={0.168}
             position-y={ projectsTransform }  rotation-x={ projectsRotation }
-            onPointerOver={() => { setHovered('projects'), document.body.style.cursor = 'pointer' }}
+            onPointerOver={() => {ready ? setHovered('projects') : null, ready ? document.body.style.cursor = 'pointer' : null }}
             onPointerOut={() => {setHovered(null), document.body.style.cursor = 'auto'}}
-            onClick={onProjectsClick}>
+            onClick={ready ? onProjectsClick : undefined}>
             <mesh name="Text" geometry={nodes.Text.geometry} material={materials['UI Text Colour']} />
             <mesh name="Text_1" geometry={nodes.Text_1.geometry} material={materials['UI Button Colour']} />
             <mesh name="Text_2" geometry={nodes.Text_2.geometry} material={materials['Projects Icon']} />
