@@ -63,6 +63,7 @@ type GLTFResult = GLTF & {
     Joystick_C: THREE.Mesh
     Power_Button: THREE.Mesh
     Start_Button: THREE.Mesh
+    Start_Button001: THREE.Mesh
     Stylus: THREE.Mesh
   }
   materials: {
@@ -161,6 +162,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
           <mesh name="Joystick_C" geometry={nodes.Joystick_C.geometry} material={materials.Background} position={[0.635, 0, -0.323]} scale={0.815} />
           <mesh name="Power_Button" geometry={nodes.Power_Button.geometry} material={materials['Speaker Colour']} position={[0, 0, 0.005]} />
           <mesh name="Start_Button" geometry={nodes.Start_Button.geometry} material={materials.Material} position={[0.635, 0.007, 0.245]} scale={0.582} />
+          <mesh name="Start_Button001" geometry={nodes.Start_Button001.geometry} material={materials.Material} position={[0.635, 0.007, 0.245]} scale={0.582} />
           <mesh name="Stylus" geometry={nodes.Stylus.geometry} material={materials['Speaker Colour']} position={[0.344, -0.084, 0.622]} scale={0.044} />
         </mesh>
       </group>

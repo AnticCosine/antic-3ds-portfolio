@@ -65,6 +65,7 @@ type GLTFResult = GLTF & {
     Joystick_C: THREE.Mesh
     Power_Button: THREE.Mesh
     Start_Button: THREE.Mesh
+    Start_Button001: THREE.Mesh
     Stylus: THREE.Mesh
   }
   materials: {
@@ -124,6 +125,47 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
     aboutRotation: hovered == 'about' && ready == true ? Math.PI / 4 : 0,
     aboutTransform: hovered == 'about' && ready == true ? baseY + 0.1 : baseY
   })
+
+  const { scaleA } = useSpring({
+    scaleA: hovered == 'A' && ready == true ? 1.2 : 1
+  });
+
+  const { scaleB } = useSpring({
+    scaleB: hovered == 'B' && ready == true ? 1.2 : 1
+  });
+
+  const { scaleX } = useSpring({
+    scaleX: hovered == 'X' && ready == true ? 1.2 : 1
+  });
+
+  const { scaleY } = useSpring({
+    scaleY: hovered == 'Y' && ready == true ? 1.2 : 1
+  });
+
+  const { scaleJoystick } = useSpring({
+    scaleJoystick: hovered == 'joystick' && ready == true ? 1.2 : 1
+  });
+
+  const { scaleCJoystick } = useSpring({
+    scaleCJoystick: hovered == 'cJoystick' && ready == true ? 1.1 : 0.815
+  });
+
+  const { scaleHome } = useSpring({
+    scaleHome: hovered == 'home' && ready == true ? 1.1 : 1
+  });
+
+  const { scaleControl } = useSpring({
+    scaleControl: hovered == 'control' && ready == true ? [3.736 * 1.2, 1.881 * 1.2, 3.736 * 1.2] : [3.736, 1.881, 3.736]
+  });
+
+  
+  const { scaleStart } = useSpring({
+    scaleStart: hovered == 'start' && ready == true ? 0.8 : 0.582
+  });
+
+  const { scaleSelect } = useSpring({
+    scaleSelect: hovered == 'select' && ready == true ? 0.8 : 0.582
+  });
 
 
 
@@ -196,10 +238,25 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
         </group>
         <mesh name="Control_Casing" geometry={nodes.Control_Casing.geometry} material={materials['Inside casing']} position={[0, 0.686, 0]} scale={1.101}>
           <group name="ABXY_Buttons" position={[0.729, 0.01, -0.125]} scale={0.841}>
-            <mesh name="Circle005" geometry={nodes.Circle005.geometry} material={materials['B Button']} />
-            <mesh name="Circle005_1" geometry={nodes.Circle005_1.geometry} material={materials['A Button']} />
-            <mesh name="Circle005_2" geometry={nodes.Circle005_2.geometry} material={materials['Y Button']} />
-            <mesh name="Circle005_3" geometry={nodes.Circle005_3.geometry} material={materials['X Button']} />
+            <animated.mesh name="Circle005" geometry={nodes.Circle005.geometry} material={materials['B Button']} 
+              scale={scaleB}
+              onPointerOver={() => { setHovered('B') }}
+              onPointerOut={() => {setHovered(null)}}/>
+
+            <animated.mesh name="Circle005_1" geometry={nodes.Circle005_1.geometry} material={materials['A Button']} 
+              scale={scaleA}
+              onPointerOver={() => { setHovered('A') }}
+              onPointerOut={() => {setHovered(null)}}/>
+
+            <animated.mesh name="Circle005_2" geometry={nodes.Circle005_2.geometry} material={materials['Y Button']} 
+              scale={scaleY}
+              onPointerOver={() => { setHovered('Y') }}
+              onPointerOut={() => {setHovered(null)}}/>
+
+            <animated.mesh name="Circle005_3" geometry={nodes.Circle005_3.geometry} material={materials['X Button']} 
+              scale={scaleX}
+              onPointerOver={() => { setHovered('X') }}
+              onPointerOut={() => {setHovered(null)}}/>
           </group>
           <mesh name="Back_Buttons_" geometry={nodes.Back_Buttons_.geometry} material={materials['Inside casing']} position={[0, -0.121, -0.521]} />
           <mesh name="Back_Casing" geometry={nodes.Back_Casing.geometry} material={materials['Inside casing']} />
@@ -214,14 +271,26 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
           <mesh name="Charging_port" geometry={nodes.Charging_port.geometry} material={materials['Speaker Colour']} position={[0, -0.083, -0.51]} />
 
           
-          <mesh name="Control_Pad" geometry={nodes.Control_Pad.geometry} material={materials.Material} position={[-0.729, 0.021, 0.073]} scale={[3.736, 1.881, 3.736]} />
+          <animated.mesh name="Control_Pad" geometry={nodes.Control_Pad.geometry} material={materials.Material} position={[-0.729, 0.021, 0.073]}
+              scale={scaleControl.to((x, y, z) => [x, y, z])}
+              onPointerOver={() => { setHovered('control') }}
+              onPointerOut={() => {setHovered(null)}}/>
           
           <mesh name="Headphone_Port" geometry={nodes.Headphone_Port.geometry} material={materials['Speaker Colour']} position={[0, -0.091, 0.512]} scale={0.032} />
-          <mesh name="Home_Button" geometry={nodes.Home_Button.geometry} material={materials.Material} position={[0, 0.021, 0.469]} />
+          <animated.mesh name="Home_Button" geometry={nodes.Home_Button.geometry} material={materials.Material} position={[0, 0.021, 0.469]} 
+            scale={scaleHome}
+            onPointerOver={() => { setHovered('home') }}
+            onPointerOut={() => {setHovered(null)}}/>
           <mesh name="Home_Button_Casing" geometry={nodes.Home_Button_Casing.geometry} material={materials.Material} />
           <mesh name="Home_Button_Casing001" geometry={nodes.Home_Button_Casing001.geometry} material={materials['Material.001']} rotation={[Math.PI, 0, Math.PI]} />
-          <mesh name="Joystick" geometry={nodes.Joystick.geometry} material={materials.Background} position={[-0.729, 0.021, -0.208]} />
-          <mesh name="Joystick_C" geometry={nodes.Joystick_C.geometry} material={materials.Background} position={[0.635, 0, -0.323]} scale={0.815} />
+          <animated.mesh name="Joystick" geometry={nodes.Joystick.geometry} material={materials.Background} position={[-0.729, 0.021, -0.208]} 
+            scale={scaleJoystick}
+            onPointerOver={() => { setHovered('joystick') }}
+            onPointerOut={() => {setHovered(null)}}/>
+          <animated.mesh name="Joystick_C" geometry={nodes.Joystick_C.geometry} material={materials.Background} position={[0.635, 0, -0.323]}
+            scale={scaleCJoystick}
+            onPointerOver={() => { setHovered('cJoystick') }}
+            onPointerOut={() => {setHovered(null)}}/>
           <mesh name="Power_Button" geometry={nodes.Power_Button.geometry} material={materials['Speaker Colour']} position={[0, 0, 0.005]} />
 
           <animated.group name="About_Icon" position={[-0.221, -0.006, 0.339]} scale={0.891}
@@ -261,7 +330,14 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
             <mesh name="Text_2" geometry={nodes.Text_2.geometry} material={materials['Projects Icon']} />
           </animated.group>
 
-          <mesh name="Start_Button" geometry={nodes.Start_Button.geometry} material={materials.Material} position={[0.635, 0.007, 0.245]} scale={0.582} />
+          <animated.mesh name="Start_Button" geometry={nodes.Start_Button.geometry} material={materials.Material} position={[0.635, 0.007, 0.245]}
+            scale={scaleStart}
+            onPointerOver={() => { setHovered('start') }}
+            onPointerOut={() => {setHovered(null)}}/>
+          <animated.mesh name="Start_Button001" geometry={nodes.Start_Button001.geometry} material={materials.Material} position={[0.635, 0.007, 0.245]}
+            scale={scaleSelect}
+            onPointerOver={() => { setHovered('select') }}
+            onPointerOut={() => {setHovered(null)}}/>
           <mesh name="Stylus" geometry={nodes.Stylus.geometry} material={materials['Speaker Colour']} position={[0.344, -0.084, 0.622]} scale={0.044} />
         </mesh>
       </group>
