@@ -39,6 +39,10 @@
   position: relative;
 }
 
+.portfolio-title {
+    font-size: 26px;
+}
+
 .details {
   display: flex;
   align-items: center;
@@ -122,7 +126,7 @@
 }
 
 .about-text {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .divider {
@@ -179,6 +183,15 @@
 }
 .projects-wrapper::-webkit-scrollbar-thumb:hover { background: #7a724c; }
 
+.credits-list {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 16px;
+}
+
+.credits-list li {
+  margin-bottom: 18px;
+}
 
 @media (max-width: 500px) {
   .header {
@@ -189,9 +202,6 @@
     font-size: 18px;
   }
 
-  .portfolio-title {
-    font-size: 24px;
-  }
 }
 
 @media (max-width: 870px) {

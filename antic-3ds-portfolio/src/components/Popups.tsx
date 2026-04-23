@@ -44,9 +44,11 @@ export const About = ({ onClose }: { onClose: () => void }) => {
                     <p className="about-text">Hello, I'm Antic and this is my 3DS portfolio site. I'm a recent computer science graduate with a passion for tech and building things like this website.</p>
                     <div className="divider"></div>
                     <h1 className="portfolio-title">Credits</h1>
-                    <p>Used Andrew Woans tutorials on his room portfolio to teach me blender and how I can make a site like this</p>
-                    <p>Modified new 3DS ll blender model from Manuel W.</p>
-                    <p>Music is 3ds nintendo settings</p>
+                    <ul className="credits-list">
+                      <li>Andrew Woan's room portfolio tutorials helped me learn blender and build this site</li>
+                      <li>3D blender model based off New 3DS XL model by Manuel W. (Modified for this project)</li>
+                      <li>Music: Nintendo Settings, 1AM & 5PM Animal Crossing New Leaf, Bubblegum K.K. & January 2015 Nintendo eShop Music</li>
+                    </ul>
                 </div>
             </div>
             

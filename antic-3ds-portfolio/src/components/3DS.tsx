@@ -214,6 +214,18 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
 
   }, [actions])
 
+  useEffect(() => {
+    const handlePointerDown = () => {
+      setHovered(null);
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown);
+
+    return () => {
+      window.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, []);
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
@@ -237,22 +249,26 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
             <animated.mesh name="Circle005" geometry={nodes.Circle005.geometry} material={materials['B Button']} 
               scale={scaleB}
               onPointerOver={() => { setHovered('B') }}
-              onPointerOut={() => {setHovered(null)}}/>
+              onPointerOut={() => {setHovered(null)}}
+              onClick={(e) => { e.stopPropagation(); setHovered('B'); }} />
 
             <animated.mesh name="Circle005_1" geometry={nodes.Circle005_1.geometry} material={materials['A Button']} 
               scale={scaleA}
               onPointerOver={() => { setHovered('A') }}
-              onPointerOut={() => {setHovered(null)}}/>
+              onPointerOut={() => {setHovered(null)}}
+              onClick={(e) => { e.stopPropagation(); setHovered('A'); }} />
 
             <animated.mesh name="Circle005_2" geometry={nodes.Circle005_2.geometry} material={materials['Y Button']} 
               scale={scaleY}
               onPointerOver={() => { setHovered('Y') }}
-              onPointerOut={() => {setHovered(null)}}/>
+              onPointerOut={() => {setHovered(null)}}
+              onClick={(e) => { e.stopPropagation(); setHovered('Y'); }} />
 
             <animated.mesh name="Circle005_3" geometry={nodes.Circle005_3.geometry} material={materials['X Button']} 
               scale={scaleX}
               onPointerOver={() => { setHovered('X') }}
-              onPointerOut={() => {setHovered(null)}}/>
+              onPointerOut={() => {setHovered(null)}}
+              onClick={(e) => { e.stopPropagation(); setHovered('X'); }} />
           </group>
           <mesh name="Back_Buttons_" geometry={nodes.Back_Buttons_.geometry} material={materials['Inside casing']} position={[0, -0.121, -0.521]} />
           <mesh name="Back_Casing" geometry={nodes.Back_Casing.geometry} material={materials['Inside casing']} />
@@ -270,23 +286,27 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
           <animated.mesh name="Control_Pad" geometry={nodes.Control_Pad.geometry} material={materials.Material} position={[-0.729, 0.021, 0.073]}
               scale={scaleControl.to((x, y, z) => [x, y, z])}
               onPointerOver={() => { setHovered('control') }}
-              onPointerOut={() => {setHovered(null)}}/>
+              onPointerOut={() => {setHovered(null)}}
+              onClick={(e) => { e.stopPropagation(); setHovered('control'); }} />
           
           <mesh name="Headphone_Port" geometry={nodes.Headphone_Port.geometry} material={materials['Speaker Colour']} position={[0, -0.091, 0.512]} scale={0.032} />
           <animated.mesh name="Home_Button" geometry={nodes.Home_Button.geometry} material={materials.Material} position={[0, 0.021, 0.469]} 
             scale={scaleHome}
             onPointerOver={() => { setHovered('home') }}
-            onPointerOut={() => {setHovered(null)}}/>
+            onPointerOut={() => {setHovered(null)}}
+            onClick={(e) => { e.stopPropagation(); setHovered('home'); }} />
           <mesh name="Home_Button_Casing" geometry={nodes.Home_Button_Casing.geometry} material={materials.Material} />
           <mesh name="Home_Button_Casing001" geometry={nodes.Home_Button_Casing001.geometry} material={materials['Material.001']} rotation={[Math.PI, 0, Math.PI]} />
           <animated.mesh name="Joystick" geometry={nodes.Joystick.geometry} material={materials.Background} position={[-0.729, 0.021, -0.208]} 
             scale={scaleJoystick}
             onPointerOver={() => { setHovered('joystick') }}
-            onPointerOut={() => {setHovered(null)}}/>
+            onPointerOut={() => {setHovered(null)}}
+            onClick={(e) => { e.stopPropagation(); setHovered('joystick'); }} />
           <animated.mesh name="Joystick_C" geometry={nodes.Joystick_C.geometry} material={materials.Background} position={[0.635, 0, -0.323]}
             scale={scaleCJoystick}
             onPointerOver={() => { setHovered('cJoystick') }}
-            onPointerOut={() => {setHovered(null)}}/>
+            onPointerOut={() => {setHovered(null)}}
+            onClick={(e) => { e.stopPropagation(); setHovered('cJoystick'); }} />
           <mesh name="Power_Button" geometry={nodes.Power_Button.geometry} material={materials['Speaker Colour']} position={[0, 0, 0.005]} />
 
           <animated.group name="About_Icon" position={[-0.221, -0.006, 0.339]} scale={0.891}
@@ -329,11 +349,13 @@ export function DS({ onAboutClick, onProjectsClick, ...props }: DSProps) {
           <animated.mesh name="Start_Button" geometry={nodes.Start_Button.geometry} material={materials.Material} position={[0.635, 0.007, 0.245]}
             scale={scaleStart}
             onPointerOver={() => { setHovered('start') }}
-            onPointerOut={() => {setHovered(null)}}/>
+            onPointerOut={() => {setHovered(null)}}
+            onClick={(e) => { e.stopPropagation(); setHovered('start'); }} />
           <animated.mesh name="Start_Button001" geometry={nodes.Start_Button001.geometry} material={materials.Material} position={[0.635, 0.007, 0.245]}
             scale={scaleSelect}
             onPointerOver={() => { setHovered('select') }}
-            onPointerOut={() => {setHovered(null)}}/>
+            onPointerOut={() => {setHovered(null)}}
+            onClick={(e) => { e.stopPropagation(); setHovered('select'); }} />
           <mesh name="Stylus" geometry={nodes.Stylus.geometry} material={materials['Speaker Colour']} position={[0.344, -0.084, 0.622]} scale={0.044} />
         </mesh>
       </group>
