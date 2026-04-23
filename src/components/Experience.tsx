@@ -15,7 +15,7 @@ export const Experience = ({ onAboutClick, onProjectsClick, isDarkMode, isMobile
             <Environment preset={isDarkMode ? "sunset" : "forest"} backgroundIntensity={0.3}/>
             <hemisphereLight intensity={1}  />
             <OrbitControls target={isMobile ? [-0.00550419168475848, 1.0751826424780047, -0.2584293814602453] : [-0.00550419168475848, 1.0751826424780047, -0.2584293814602453]}/>
-            <DS onAboutClick={onAboutClick} onProjectsClick={onProjectsClick}/>
+            <DS key={isDarkMode ? "dark" : "light"} onAboutClick={onAboutClick} onProjectsClick={onProjectsClick}/>
         </>
     );
 }
