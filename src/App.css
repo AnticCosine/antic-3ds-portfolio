@@ -1,6 +1,6 @@
 @font-face {
   font-family: "maru";
-  src: url("../assets/maru.ttf") format("opentype");
+  src: url("/maru.woff2") format("opentype");
 }
 
 .app {
