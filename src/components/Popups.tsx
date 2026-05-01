@@ -101,13 +101,13 @@ export const Projects = ({ onClose }: { onClose: () => void }) => {
                 <div className="pokemon-sleep">
                   <a href="https://sleep-dex.com/" target="_blank"><img src="sleep-dex.png" alt="" /></a>
                   <h1>Sleep Dex</h1>
-                  <p>A Pokemon Sleep companion tool for keeping track of sleep styles, recipes and ingredients. Can also upload screenshots of your inventory to update ingredient list to see cookable recipes.</p>
+                  <p>A Pokemon Sleep companion tool for keeping track of sleep styles, recipes and ingredients. Can also upload screenshots of your inventory which updates ingredients list to see what recipes you can cook.</p>
                   <p>Skills: Angular, Node.js, Express, MongoDB, Tesseract.js</p>
                 </div>
                 <div className="discord">
                   <a href="https://github.com/AnticCosine/oz-bot" target="_blank"><img src="ozbot.png" alt="" /></a>
                   <h1>OzBot</h1>
-                  <p>A Discord Bot which notifies users on trending deals from the website OzBargain. Users can filter by specific category of items and specific upvotes the post must have to qualify as a deal. </p>
+                  <p>A Discord Bot which notifies users about trending deals from the website OzBargain. Users can filter by specific category of items and specific upvotes the post must have to qualify as a deal.</p>
                   <p>Skills: JavaScript, Discord.js, node-fetch, cheerio</p>
                 </div>
               </div>
