@@ -101,7 +101,7 @@ export const Projects = ({ onClose }: { onClose: () => void }) => {
                 <div className="pokemon-sleep">
                   <a href="https://sleep-dex.com/" target="_blank"><img src="sleep-dex.png" alt="" /></a>
                   <h1>Sleep Dex</h1>
-                  <p>A Pokemon Sleep Recipe tracker to keep track of unlocked and cookable recipes in the Pokemon sleep game. Can also upload screenshots of your inventory to update ingredient list to see cookable recipes.</p>
+                  <p>A Pokemon Sleep companion tool for keeping track of sleep styles, recipes and ingredients. Can also upload screenshots of your inventory to update ingredient list to see cookable recipes.</p>
                   <p>Skills: Angular, Node.js, Express, MongoDB, Tesseract.js</p>
                 </div>
                 <div className="discord">
