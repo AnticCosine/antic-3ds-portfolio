@@ -61,7 +61,25 @@
 }
 
 .about-body {
-    padding-right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-right: 4px;
+}
+
+.about-img  {
+  background: #fffef0;
+  border: 3px solid #90875b;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gif {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 11px;
 }
 
 .about-wrapper::-webkit-scrollbar { width: 12px; }
@@ -81,16 +99,67 @@
   box-shadow: #0000003d 0 3px 8px;
   margin: 0 auto;
   width: fit-content;
-}
-
-.gif {
-  border: 10px solid #90875b;
-  border-radius: 24px;
-  width: 100%;
-  max-height: 500px;
+  color: #5c5630;
 }
 
 
+.about-card {
+  background: #fffef0;
+  border: 3px solid #90875b;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #90875b;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.about-text {
+  font-size: 16px;
+  color: #4a431f;
+  line-height: 1.6;
+}
+
+.credits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.credit-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+  color: #4a431f;
+  line-height: 1.5;
+}
+
+.credit-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e8e19a;
+  border: 2px solid #b0a860;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #5c5630;
+}
 
 .button {
   display: flex;
@@ -110,6 +179,7 @@
   cursor: pointer;
 
   transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  
 }
 
 .button:hover {
@@ -121,13 +191,11 @@
 }
 
 .button img {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
 }
 
-.about-text {
-  font-size: 18px;
-}
+
 
 .divider {
   border: 1px solid #90875b;
@@ -142,35 +210,97 @@
 }
 
 .projects-body {
-  padding: 12px 10px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-  flex-direction: row;
-
-  gap: 32px;
-
-  margin-top: 8px;
+  padding: 8px 4px 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
-.pokemon-sleep img,
-.discord img {
-  width: 300px;
-  height: 300px;
+.project-card {
+  background: #fffef0;
+  border: 3px solid #90875b;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
-  border: 6px solid #90875b;
-  border-radius: 24px;
-
-  position: relative;
   transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.pokemon-sleep img:hover,
-.discord img:hover {
-  transform: scale(0.95);
+.project-card:hover {
+  transform: scale(1.02);
+}
 
-  cursor: pointer;
+.card-img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  
+}
+
+.card-info {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border-top: 3px solid #90875b;
+  flex: 1;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4a431f;
+}
+
+.card-desc {
+  font-size: 12px;
+  color: #706a40;
+  line-height: 1.5;
+}
+
+.card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.chip {
+  font-size: 10px;
+  font-weight: 600;
+  background: #e8e19a;
+  color: #5c5630;
+  border-radius: 20px;
+  padding: 2px 9px;
+  border: 1px solid #b0a860;
+}
+
+.card-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.link-btn {
+  font-size: 12px;
+  font-weight: 600;
+  color: #90875b;
+  border: 2px solid #90875b;
+  border-radius: 8px;
+  padding: 3px 12px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.link-btn:hover {
+  background: #90875b;
+  color: #f2ebac;
 }
 
 .projects-wrapper::-webkit-scrollbar { width: 12px; }
@@ -183,15 +313,7 @@
 }
 .projects-wrapper::-webkit-scrollbar-thumb:hover { background: #7a724c; }
 
-.credits-list {
-  margin: 0;
-  padding-left: 22px;
-  font-size: 16px;
-}
 
-.credits-list li {
-  margin-bottom: 18px;
-}
 
 @media (max-width: 500px) {
   .header {
@@ -208,7 +330,6 @@
 
   .about-box {
     width: calc(100vw - 32px);
-    height: calc(100dvh - 80px);
     max-width: 100%;
     padding: 20px 16px;
     border-radius: 16px;
@@ -224,25 +345,30 @@
   }
 
   .button img {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
   }
 
 
   .projects-body {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 24px;
   }
 
-  .pokemon-sleep img,
-  .discord img {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-    aspect-ratio: 16 / 12;
-    object-fit:cover;
-    display: block;
+  .project-card:hover {
+    transform: scale(1.01);
   }
+
+  .button:hover {
+    transform: scale(1.05) rotate(-12deg);
+  }
+
+  .button:active {
+    transform: scale(0.90) rotate(-6deg);
+  }
+
 }
+
+
+
 
