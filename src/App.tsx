@@ -117,7 +117,7 @@ function App() {
         />
       </button>
 
-      <audio ref={audioRef} loop />
+      <audio ref={audioRef} />
       
       <Canvas camera={{ position: isMobile ? [-0.0031266243277873504, 3.908082291118143, 2.8956510541614993] : [-0.003756461201234294, 3.1576242011477875, 2.0601095691442692], fov: 70 } }>
         <Experience onAboutClick={() => setShowAbout(true)} onProjectsClick={() => setShowProjects(true)} isDarkMode={darkMode} isMobile={isMobile}/>
