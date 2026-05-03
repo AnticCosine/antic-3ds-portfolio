@@ -320,6 +320,14 @@
   .header {
     padding: 10px 20px;
   }
+
+  .section-title {
+    font-size: 18px;
+  }
+
+  .about-text {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 870px) {
